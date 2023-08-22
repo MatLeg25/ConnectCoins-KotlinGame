@@ -170,7 +170,12 @@ val WIN = 3
 fun checkWin() {
    // checkVertical()
    // checkHorizontal()
-    checkDiagonal()
+//    checkDiagonal2b()
+//    Log.e("elox","~~~~~~~~~~")
+//    checkDiagonal2FromRIght()
+//    Log.e("elox","~~~~~~~~~~")
+    checkDiagonalLeftTop()
+
 }
 
 
@@ -210,3 +215,67 @@ fun checkDiagonal() {
         }
     }
 }
+
+fun checkDiagonal2() {
+    var result = 0
+    val ES = 8
+    for (x in 0 .. ES) {
+        for (y in 0 .. ES - x) {
+            val point = Pair(x+y,y)
+          //  val cell = DATA0[point.first][point.second]
+            Log.e("elox","Checked point: ${point.first},${point.second}")
+       //     result = if (cell.state.value) result + 1 else 0
+            if (result == WIN) Log.e("elox", ">>>WIN DIAGONAL <<<")
+        }
+        Log.e("elox","===========================")
+    }
+}
+
+fun checkDiagonalLBandRB() {
+    var result = 0
+    val ES = 8
+    for (x in 0 .. ES) {
+        for (y in 0 .. ES - x) {
+            val pointLB = Pair(x+y,y)
+            val pointRT = Pair(y,x+y)
+            //  val cell = DATA0[point.first][point.second]
+//            Log.e("elox","Checked point: ${pointLB.first},${pointLB.second}")
+//            Log.w("elox","Checked point: ${pointRT.first},${pointRT.second}")
+            //     result = if (cell.state.value) result + 1 else 0
+            if (result == WIN) Log.e("elox", ">>>WIN DIAGONAL <<<")
+        }
+        Log.e("elox","===========================")
+    }
+}
+
+
+fun checkDiagonalRightBottom() {
+    var result = 0
+    val ES = 8
+    for (x in 0 until ES+1) {
+        for (y in 0 until ES-x+1) {
+//            val pointRB = Pair(x+y,ES-y)
+            val pointLT = Pair(ES-x,x+y)
+            //  val cell = DATA0[point.first][point.second]
+            Log.e("elox","Checked point: ${pointLT.first},${pointLT.second}")
+//            Log.w("elox","Checked point: ${pointRB.first},${pointRB.second}")
+            //     result = if (cell.state.value) result + 1 else 0
+            if (result == WIN) Log.e("elox", ">>>WIN DIAGONAL <<<")
+        }
+        Log.e("elox","===========================")
+    }
+}
+
+fun checkDiagonalLeftTop() {
+    val ES = 8
+    for (x in 0 until ES+1) {
+        for (y in x until ES+1) {
+            val pointLT = Pair(ES-y,y-x)
+            Log.e("elox","Checked point: ${pointLT.first},${pointLT.second}")
+
+        }
+        Log.e("elox","===========================")
+    }
+}
+
+
