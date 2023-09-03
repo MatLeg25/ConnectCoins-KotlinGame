@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,10 +34,10 @@ import com.example.connectcoins.ui.BottomModal
 import com.example.connectcoins.ui.GameUiState
 import com.example.connectcoins.ui.GameViewModel
 import com.example.connectcoins.ui.theme.ConnectCoinsTheme
-import com.example.connectcoins.utils.Validator
 
 
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -62,8 +64,6 @@ class MainActivity : ComponentActivity() {
                     ) {
 
                         TableScreen(
-                            DATA.SIZE,
-                            DATA.cells,
                             dataHeader,
                             gameUiState,
                             viewModel,
@@ -71,9 +71,12 @@ class MainActivity : ComponentActivity() {
 
                         Text(
                             modifier = Modifier.background(gameUiState.currentPlayer.color),
-                            text = "Current player: ${gameUiState.currentPlayer.name} , MOVES: ${gameUiState.moves}")
+                            text = "Current player: ${gameUiState.currentPlayer.name} , MOVES: ${gameUiState.moves} \n ${gameUiState.isGameOver}")
 
-                        BottomModal()
+                        BottomModal(
+                            gameUiState = gameUiState,
+                            state = if (gameUiState.isGameOver) SheetValue.Expanded else SheetValue.Hidden
+                        )
                     }
                 }
             }
@@ -81,7 +84,52 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@Preview(showBackground = true)
+@Composable
+fun TableScreen(
+    dataHeader: List<Cell> = DATA.RANGE.map { item ->
+        Cell(item, "Cell$item")
+    },
+    gameUiState: GameUiState = GameUiState(Player("a",Color.Red)),
+    viewModel: GameViewModel = viewModel(),
 
+    ) {
+
+    Row() {
+        viewModel.data.forEachIndexed { index, column ->
+            SingleColumn(
+                items = column,
+                columnIdx = index,
+                currentPlayerId = gameUiState.currentPlayer.id,
+                viewModel = viewModel,
+            )
+        }
+    }
+
+}
+
+@Composable
+fun SingleColumn(
+    items: Array<Cell>,
+    columnIdx: Int,
+    currentPlayerId: String,
+    viewModel: GameViewModel = viewModel(),
+) {
+    Column(
+        modifier = Modifier
+            .clickable {
+                viewModel.onColumnClick(columnIdx, currentPlayerId)
+            },
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = "${columnIdx + 1}")
+        items.forEach {
+            val color = if (it.playerId != null) viewModel.getPlayer(it.playerId!!)!!.color else Color.Green
+            CellItem(item = it, color)
+        }
+
+    }
+}
 
 @Composable
 fun CellItem(item: Cell, color: Color) {
@@ -99,77 +147,6 @@ fun CellItem(item: Cell, color: Color) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun TableScreen(
-    SIZE: Int = 5,
-    data: Array<Array<Cell>> = DATA.cells,
-    dataHeader: List<Cell> = DATA.RANGE.map { item ->
-        Cell(item, "Cell$item")
-    },
-    gameUiState: GameUiState = GameUiState(Player("a",Color.Red)),
-    viewModel: GameViewModel = viewModel(),
-    showModalFun: () -> Unit = { Unit },
-
-    ) {
-
-    Row() {
-        data.forEachIndexed { index, column ->
-            SingleColumn(
-                items = column,
-                columnIdx = index,
-                currentPlayerId = gameUiState.currentPlayer.id,
-                viewModel = viewModel,
-                showModalFun = showModalFun,
-            )
-        }
-    }
-
-}
-
-@Composable
-fun SingleColumn(
-    items: Array<Cell>,
-    columnIdx: Int,
-    currentPlayerId: String,
-    viewModel: GameViewModel = viewModel(),
-    showModalFun: () -> Unit
-) {
-    Column(
-        modifier = Modifier
-            .clickable {
-                    onCellClick(
-                    columnIdx,
-                    currentPlayerId,
-                    { viewModel.nextPlayer() },
-                    showModalFun)
-            }
-    ) {
-        items.forEach {
-            val color = if (it.playerId != null) viewModel.getPlayer(it.playerId!!)!!.color else Color.Green
-            CellItem(item = it, color)
-        }
-
-    }
-}
-
-
-
-fun onCellClick(
-    column: Int,
-    currentPlayerId: String,
-    nextPlayer: () -> Unit,
-    showModalFun: () -> Unit
-) {
-    val cell = DATA.cells[column].findLast { it.playerId == null }
-    cell?.let {
-        it.playerId = currentPlayerId
-        nextPlayer.invoke()
-    }
-    val validator = Validator()
-    val isWinner = validator.checkWin(currentPlayerId)
-    if (isWinner) showModalFun.invoke()
-}
 
 
 
