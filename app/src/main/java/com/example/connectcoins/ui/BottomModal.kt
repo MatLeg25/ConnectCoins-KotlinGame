@@ -1,11 +1,14 @@
 package com.example.connectcoins.ui
 
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -19,14 +22,17 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
+@Preview
 fun BottomModal() {
     val sheetState = rememberStandardBottomSheetState(
-        initialValue = SheetValue.Hidden,
+        initialValue = SheetValue.Expanded,
         skipHiddenState = false
     )
     val scaffoldState = rememberBottomSheetScaffoldState(
@@ -42,27 +48,37 @@ fun BottomModal() {
                 .fillMaxWidth()
                 .height(300.dp)
         ) {
-            Text(text = "SIEMA")
-            Text(
-                text = "Bottom sheet",
-                style = MaterialTheme.typography.bodyMedium
-            )
-            Spacer(modifier = Modifier.height(32.dp))
-            Text(
-                text = "Click outside the bottom sheet to hide it",
-                style = MaterialTheme.typography.bodyMedium
-            )
-            Button(
-                modifier = Modifier
-                    .height(50.dp),
-                onClick = {
-                    scope.launch {
-                        sheetState.hide()
+            Column() {
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(Color.DarkGray),
+                    text = "Game stats",
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.titleLarge
+                )
+                Spacer(modifier = Modifier.height(32.dp))
+                Text(
+                    modifier = Modifier.padding(horizontal = 20.dp),
+
+                    text = "Abcdeeeeeeeeeeeeeeeeeeeeeeeeee",
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+                Spacer(modifier = Modifier.height(32.dp))
+                Button(
+                    modifier = Modifier
+                        .height(50.dp)
+                        .padding(horizontal = 20.dp),
+                    onClick = {
+                        scope.launch {
+                            sheetState.hide()
+                        }
                     }
+                ) {
+                    Text(text = "Close")
                 }
-            ) {
-                Text(text = "Close")
             }
+
         }
     },
     sheetContentColor = Color.Green,
@@ -77,7 +93,7 @@ fun BottomModal() {
                     else sheetState.expand()
                 }
             }) {
-                Text(text = "Toggle sheet")
+                Text(text = "Show stats")
             }
         }
     }
