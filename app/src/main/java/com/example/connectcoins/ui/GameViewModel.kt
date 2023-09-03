@@ -2,6 +2,7 @@ package com.example.connectcoins.ui
 
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
+import com.example.connectcoins.data.Player
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -38,17 +39,9 @@ class GameViewModel(
         uiState.value.printInfo()
     }
 
+    fun getPlayer(playerId: String): Player? = players.firstOrNull { it.id == playerId }
+
 }
 
 
-class Cell(
-    val index: Int,
-    var text: String,
-    var state: Color = Color.Green
-)
-
-class Player(
-    val name: String,
-    var color: Color
-)
 

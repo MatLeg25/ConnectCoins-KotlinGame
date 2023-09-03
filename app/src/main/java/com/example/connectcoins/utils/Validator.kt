@@ -1,23 +1,23 @@
 package com.example.connectcoins.utils
 
 import android.util.Log
+import androidx.compose.ui.graphics.Color
 import com.example.connectcoins.data.DATA
 
 class Validator {
 
     val WIN = 4
 
-    fun checkWin(): Boolean {
-return false
-//        return if (checkHorizontal()) {
-//            Log.w("elox",">>>WIN by checkHorizontal")
+    fun checkWin(currentPlayerUid: String): Boolean {
+        return if (checkHorizontal(currentPlayerUid)) {
+            Log.w("elox",">>>WIN by checkHorizontal")
+            true
+        }
+//        else if (checkVertical()) {
+//            Log.w("elox",">>>WIN by checkVertical")
 //            true
 //        }
-////        else if (checkVertical()) {
-////            Log.w("elox",">>>WIN by checkVertical")
-////            true
-////        }
-//        else false
+        else false
         //todo update
 
 //        else if (checkDiagonalLeftBottomAndRightTop()) {
@@ -34,18 +34,18 @@ return false
 //    }
     }
 
-//    fun checkHorizontal(): Boolean {
-//        var result = 0
-//        for (x in DATA.cells.indices) {
-//            for (y in DATA.cells[0].indices) {
-//                val cell = DATA.cells[y][x]
-//                result = if (cell.state.value) result + 1 else 0
-//                if (result == WIN) return true
-//            }
-//            result = 0
-//        }
-//        return false
-//    }
+    private fun checkHorizontal(currentPlayerUid: String): Boolean {
+        var result = 0
+        for (x in DATA.cells.indices) {
+            for (y in DATA.cells[0].indices) {
+                val cell = DATA.cells[y][x]
+                result = if (cell.playerId == currentPlayerUid) result + 1 else 0
+                if (result == WIN) return true
+            }
+            result = 0
+        }
+        return false
+    }
 //
 //    fun checkVertical(): Boolean {
 //        var result = 0

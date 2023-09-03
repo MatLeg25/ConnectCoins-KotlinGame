@@ -1,7 +1,5 @@
 package com.example.connectcoins.data
 
-import com.example.connectcoins.ui.Cell
-
 object DATA {
 
     val SIZE = 8

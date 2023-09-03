@@ -35,11 +35,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.connectcoins.ui.theme.ConnectCoinsTheme
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.connectcoins.data.Cell
 import com.example.connectcoins.data.DATA
-import com.example.connectcoins.ui.Cell
+import com.example.connectcoins.data.Player
 import com.example.connectcoins.ui.GameUiState
 import com.example.connectcoins.ui.GameViewModel
-import com.example.connectcoins.ui.Player
 import com.example.connectcoins.utils.Validator
 
 //todo move to cofnig class
@@ -110,14 +110,14 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun CellItem(item: Cell) {
+fun CellItem(item: Cell, color: Color) {
     Box(
         modifier = Modifier
             .padding(8.dp)
             .size(50.dp)
             //.aspectRatio(1f)
             .clip(RoundedCornerShape(25.dp))
-            .background(item.state),
+            .background(color),
 
         contentAlignment = Alignment.Center,
     ) {
@@ -144,8 +144,8 @@ fun TableScreen(
             SingleColumn(
                 items = column,
                 columnIdx = index,
-                currentPlayerColor = gameUiState.currentPlayer.color,
-                nextPlayer = { viewModel.nextPlayer() },
+                currentPlayerId = gameUiState.currentPlayer.id,
+                viewModel = viewModel,
                 showModalFun = showModalFun,
             )
         }
@@ -157,16 +157,23 @@ fun TableScreen(
 fun SingleColumn(
     items: Array<Cell>,
     columnIdx: Int,
-    currentPlayerColor: Color,
-    nextPlayer: () -> Unit,
+    currentPlayerId: String,
+    viewModel: GameViewModel = viewModel(),
     showModalFun: () -> Unit
 ) {
     Column(
         modifier = Modifier
-            .clickable { onCellClick(columnIdx, currentPlayerColor, nextPlayer, showModalFun) }
+            .clickable {
+                    onCellClick(
+                    columnIdx,
+                    currentPlayerId,
+                    { viewModel.nextPlayer() },
+                    showModalFun)
+            }
     ) {
         items.forEach {
-            CellItem(item = it)
+            val color = if (it.playerId != null) viewModel.getPlayer(it.playerId!!)!!.color else Color.Green
+            CellItem(item = it, color)
         }
 
     }
@@ -203,17 +210,17 @@ fun BottomSheet(onDismiss: () -> Unit) {
 
 fun onCellClick(
     column: Int,
-    currentPlayerColor: Color,
+    currentPlayerId: String,
     nextPlayer: () -> Unit,
     showModalFun: () -> Unit
 ) {
-    val cell = DATA.cells[column].findLast { it.state == Color.Green }
+    val cell = DATA.cells[column].findLast { it.playerId == null }
     cell?.let {
-        it.state = currentPlayerColor
+        it.playerId = currentPlayerId
         nextPlayer.invoke()
     }
     val validator = Validator()
-    val isWinner = validator.checkWin()
+    val isWinner = validator.checkWin(currentPlayerId)
     if (isWinner) showModalFun.invoke()
 }
 

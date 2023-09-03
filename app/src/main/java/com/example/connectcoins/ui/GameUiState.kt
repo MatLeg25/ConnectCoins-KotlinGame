@@ -1,6 +1,7 @@
 package com.example.connectcoins.ui
 
 import android.util.Log
+import com.example.connectcoins.data.Player
 
 /**
  * Data class that represents the game UI state
