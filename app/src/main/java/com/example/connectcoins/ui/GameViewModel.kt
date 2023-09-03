@@ -1,10 +1,8 @@
 package com.example.connectcoins.ui
 
-import android.util.Log
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import com.example.connectcoins.data.Cell
-import com.example.connectcoins.data.DATA
 import com.example.connectcoins.data.Player
 import com.example.connectcoins.utils.Validator
 
@@ -20,10 +18,11 @@ class GameViewModel(
         )
 ): ViewModel() {
 
-    private val validator = Validator()
 
-    var data: Array<Array<Cell>>
+
+    var gameboard: Array<Array<Cell>>
     private val totalMoves: Int
+    private val validator: Validator
 
     val SIZE = 3
     val RANGE = 0 until SIZE
@@ -34,8 +33,9 @@ class GameViewModel(
 
 
     init {
-        data = generateGameBoard()
-        totalMoves = data.size * data[0].size
+        gameboard = generateGameBoard()
+        totalMoves = gameboard.size * gameboard[0].size
+        validator = Validator(gameboard)
     }
 
 
@@ -49,7 +49,7 @@ class GameViewModel(
     fun getPlayer(playerId: String): Player? = players.firstOrNull { it.id == playerId }
 
     fun onColumnClick(columnIdx: Int, currentPlayerId: String) {
-        val cell = data[columnIdx].findLast { it.playerId == null }
+        val cell = gameboard[columnIdx].findLast { it.playerId == null }
         cell?.let {
             it.playerId = currentPlayerId
             nextPlayer()

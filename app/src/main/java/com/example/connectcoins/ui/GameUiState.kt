@@ -14,7 +14,7 @@ data class GameUiState(
 ) {
     fun printInfo() {
         Log.w("elox","------------------------------------------------------------------------")
-        Log.w("elox",">>>>>>>>>>>>>>>>>>>>>>>>> ${currentPlayer.name} : ${currentPlayer.name}")
+        Log.w("elox",">>>>>>>>>>>>>>>>>>>>>>>>> ${currentPlayer.name} : ${currentPlayer.id}")
         Log.w("elox",">>>>>>>>>>>>>>>>>>>>>>>>> $moves")
         Log.w("elox",">>>>>>>>>>>>>>>>>>>>>>>>> $isGameOver : ${winner?.name}")
         Log.w("elox","------------------------------------------------------------------------")

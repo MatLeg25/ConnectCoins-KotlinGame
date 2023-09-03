@@ -96,7 +96,7 @@ fun TableScreen(
     ) {
 
     Row() {
-        viewModel.data.forEachIndexed { index, column ->
+        viewModel.gameboard.forEachIndexed { index, column ->
             SingleColumn(
                 items = column,
                 columnIdx = index,
