@@ -23,9 +23,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.connectcoins.R
 import com.example.connectcoins.data.Player
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -47,7 +49,9 @@ fun BottomModal(
     val scope = rememberCoroutineScope()
 
     val isGameOver = gameUiState.isGameOver
-    val gameStateText = if (isGameOver) "ENDED" else "IN PROGRESS"
+    val gameStateText =
+        if (isGameOver) stringResource(id = R.string.game_ended)
+        else stringResource(id = R.string.game_in_progress)
     val winner = gameUiState.winner
 
     BottomSheetScaffold(
@@ -63,7 +67,7 @@ fun BottomModal(
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(Color.DarkGray),
-                    text = "Game stats",
+                    text = stringResource(id = R.string.game_stats),
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.titleLarge
                 )
@@ -71,14 +75,16 @@ fun BottomModal(
                 Text(
                     modifier = Modifier.padding(horizontal = 20.dp),
 
-                    text = "Game state: $gameStateText",
+                    text = stringResource(R.string.game_state_X, gameStateText),
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 Spacer(modifier = Modifier.height(24.dp))
                 if (isGameOver) {
                     Text(
                         modifier = Modifier.padding(horizontal = 20.dp),
-                        text = if (winner != null) "The winner is: ${winner.name}" else "The game has no winner, draw.",
+                        text =
+                            if (winner != null) stringResource(id = R.string.game_winner_X, winner.name)
+                            else stringResource(id = R.string.game_no_winner),
                         style = MaterialTheme.typography.bodyMedium,
                     )
                 } else {
@@ -94,7 +100,7 @@ fun BottomModal(
                         setSheetState(scope, sheetState, false)
                     }
                 ) {
-                    Text(text = "Close")
+                    Text(text = stringResource(id = R.string.close))
                 }
             }
 
@@ -110,7 +116,7 @@ fun BottomModal(
                 //toggle state
                 setSheetState(scope, sheetState, !sheetState.isVisible)
             }) {
-                Text(text = "Show stats")
+                Text(text = stringResource(id = R.string.show_stats))
             }
         }
     }

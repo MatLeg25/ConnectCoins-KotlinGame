@@ -70,14 +70,14 @@ class MainActivity : ComponentActivity() {
 
                         Text(
                             modifier = Modifier.background(gameUiState.currentPlayer.color),
-                            text = "Current player: ${gameUiState.currentPlayer.name} , MOVES: ${gameUiState.moves} \n ${gameUiState.isGameOver}")
+                            text = getString(R.string.current_player_X, gameUiState.currentPlayer.name))
 
 
                         if (gameUiState.isGameOver) {
                             Button(onClick = {
                                 viewModel.resetGame()
                             }) {
-                                Text(text ="Restart game")
+                                Text(text = getString(R.string.restart_game))
                             }
                         }
 
