@@ -6,7 +6,9 @@ import java.util.UUID
 class Cell(
     val index: Int,
     val text: String,
-    var playerId: String? = null
+    val cords: Pair<Int, Int>,
+    var playerId: String? = null,
+    var isWin: Boolean = false
 )
 
 class Player(

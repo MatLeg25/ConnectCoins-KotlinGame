@@ -20,6 +20,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -51,10 +53,6 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
 
-                    val dataHeader = DATA.RANGE.map { item ->
-                        Cell(item, "Column $item")
-                    }
-
                     val gameViewModel: GameViewModel = viewModel()
                     val gameUiState by gameViewModel.uiState.collectAsState()
 
@@ -64,7 +62,6 @@ class MainActivity : ComponentActivity() {
                     ) {
 
                         TableScreen(
-                            dataHeader,
                             gameUiState,
                             viewModel,
                         )
@@ -87,12 +84,8 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun TableScreen(
-    dataHeader: List<Cell> = DATA.RANGE.map { item ->
-        Cell(item, "Cell$item")
-    },
     gameUiState: GameUiState = GameUiState(Player("a",Color.Red)),
     viewModel: GameViewModel = viewModel(),
-
     ) {
 
     Row() {
@@ -133,17 +126,21 @@ fun SingleColumn(
 
 @Composable
 fun CellItem(item: Cell, color: Color) {
+    val winColor = Color.Yellow
+
+    val cellColor = if (item.isWin) winColor else color
+
     Box(
         modifier = Modifier
             .padding(8.dp)
             .size(50.dp)
             //.aspectRatio(1f)
             .clip(RoundedCornerShape(25.dp))
-            .background(color),
+            .background(cellColor),
 
         contentAlignment = Alignment.Center,
     ) {
-        Text(text = item.text)
+        Text(text = item.cords.toString())
     }
 }
 

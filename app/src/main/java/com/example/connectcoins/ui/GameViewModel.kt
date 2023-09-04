@@ -18,8 +18,6 @@ class GameViewModel(
         )
 ): ViewModel() {
 
-
-
     var gameboard: Array<Array<Cell>>
     private val totalMoves: Int
     private val validator: Validator
@@ -38,13 +36,9 @@ class GameViewModel(
         validator = Validator(gameboard)
     }
 
-
     fun resetGame() {
         _uiState.value = GameUiState(players[0])
     }
-
-
-
 
     fun getPlayer(playerId: String): Player? = players.firstOrNull { it.id == playerId }
 
@@ -70,7 +64,7 @@ class GameViewModel(
     }
 
     private fun isEndGame(currentPlayerId: String) {
-        val isWinner = validator.checkWin(currentPlayerId)
+        val isWinner = validator.checkWin(currentPlayerId) != null
         if (isWinner) _uiState.update {  currentState ->
             currentState.copy(
                 isGameOver = true,
@@ -84,9 +78,9 @@ class GameViewModel(
         }
     }
 
-    private fun generateGameBoard(): Array<Array<Cell>> = RANGE.map {
-        RANGE.map {
-            Cell(it, it.toString())
+    private fun generateGameBoard(): Array<Array<Cell>> = RANGE.map { x->
+        RANGE.map { y ->
+            Cell(x, x.toString(), Pair(x, y))
         }.toTypedArray()
     }.toTypedArray()
 

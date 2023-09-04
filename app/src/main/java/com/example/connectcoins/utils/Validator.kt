@@ -2,7 +2,6 @@ package com.example.connectcoins.utils
 
 import android.util.Log
 import com.example.connectcoins.data.Cell
-import com.example.connectcoins.data.DATA
 
 class Validator(private val gameboard: Array<Array<Cell>>) {
 
@@ -10,44 +9,54 @@ class Validator(private val gameboard: Array<Array<Cell>>) {
 
     private val rowsRange = gameboard.indices
     private val columnsRange = gameboard[0].indices
+    private val winCombination: MutableList<Pair<Int, Int>> = mutableListOf()
+    private var playerId = ""
 
-    val condition: (cell: Cell, playerId: String) -> Boolean =
-        { cell, playerId -> cell.playerId == playerId}
+    val condition: (cell: Cell) -> Boolean = { cell -> cell.playerId == playerId }
 
-    fun checkWin(currentPlayerUid: String): Boolean {
-        return if (checkHorizontal(currentPlayerUid)) {
-            Log.w("elox",">>>WIN by checkHorizontal")
-            true
+    fun checkWin(currentPlayerId: String): List<Pair<Int, Int>>? {
+        playerId = currentPlayerId
+
+        return if (checkHorizontal()) {
+            Log.w("elox",">>>WIN by checkHorizontal \n WIN COMBINATION: $winCombination")
+            winCombination.forEach { cords ->
+                gameboard[cords.first][cords.second].isWin = true
+            }
+            winCombination
         }
-        else if (checkVertical(currentPlayerUid)) {
-            Log.w("elox",">>>WIN by checkVertical")
-            true
-        }
-        else false
-        //todo update + save win combination
-
+        else if (checkVertical()) {
+            Log.w("elox",">>>WIN by checkVertical \n WIN COMBINATION: $winCombination")
+            winCombination.forEach { cords ->
+                gameboard[cords.first][cords.second].isWin = true
+            }
+            winCombination
+//        }
 //        else if (checkDiagonalLeftBottomAndRightTop()) {
-//        Log.w("elox",">>>WIN by checkDiagonalLeftBottomAndRightTop")
-//            true
+//            Log.w("elox",">>>WIN by checkDiagonalLeftBottomAndRightTop")
+//            winCombination
 //    }
 //        else if (checkDiagonalRightBottom()) {
-//        Log.w("elox",">>>WIN by checkDiagonalRightBottom")
-//            true
-//    }
-//        else {
-//        Log.w("elox",">>>WIN by checkDiagonalLeftTop")
-//            checkDiagonalLeftTop()
-//    }
+//            Log.w("elox",">>>WIN by checkDiagonalRightBottom")
+//            winCombination
+//        }
+//        else if (checkDiagonalLeftTop()){
+//            Log.w("elox",">>>WIN by checkDiagonalLeftTop")
+//            winCombination
+        }  else null
     }
 
-    private fun checkHorizontal(currentPlayerUid: String): Boolean {
+    private fun checkHorizontal(): Boolean {
         var result = 0
         for (x in rowsRange) {
             for (y in columnsRange) {
                 val cell = gameboard[y][x]
-                result = if (cell.playerId ==  currentPlayerUid) {
+                result = if (condition(cell))  {
+                    winCombination.add(Pair(y,x))
                     result + 1
-                } else 0
+                } else {
+                    winCombination.clear()
+                    0
+                }
                 if (result == WIN) return true
             }
             result = 0
@@ -55,12 +64,18 @@ class Validator(private val gameboard: Array<Array<Cell>>) {
         return false
     }
 
-    private fun checkVertical(currentPlayerUid: String): Boolean {
+    private fun checkVertical(): Boolean {
         var result = 0
         for (x in rowsRange) {
             for (y in columnsRange) {
                 val cell = gameboard[x][y]
-                result = if (condition(cell, currentPlayerUid)) result + 1 else 0
+                result = if (condition(cell))  {
+                    winCombination.add(Pair(x,y))
+                    result + 1
+                } else {
+                    winCombination.clear()
+                    0
+                }
                 if (result == WIN) return true
             }
             result = 0
