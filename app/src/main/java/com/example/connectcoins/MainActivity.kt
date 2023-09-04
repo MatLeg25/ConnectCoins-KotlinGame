@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SheetValue
@@ -35,6 +36,7 @@ import com.example.connectcoins.data.Player
 import com.example.connectcoins.ui.BottomModal
 import com.example.connectcoins.ui.GameUiState
 import com.example.connectcoins.ui.GameViewModel
+import com.example.connectcoins.ui.setSheetState
 import com.example.connectcoins.ui.theme.ConnectCoinsTheme
 
 
@@ -70,10 +72,23 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.background(gameUiState.currentPlayer.color),
                             text = "Current player: ${gameUiState.currentPlayer.name} , MOVES: ${gameUiState.moves} \n ${gameUiState.isGameOver}")
 
+
+                        if (gameUiState.isGameOver) {
+                            Button(onClick = {
+                                viewModel.resetGame()
+                            }) {
+                                Text(text ="Restart game")
+                            }
+                        }
+
                         BottomModal(
                             gameUiState = gameUiState,
                             state = if (gameUiState.isGameOver) SheetValue.Expanded else SheetValue.Hidden
                         )
+
+
+
+
                     }
                 }
             }

@@ -37,6 +37,7 @@ class GameViewModel(
     }
 
     fun resetGame() {
+        gameboard = generateGameBoard()
         _uiState.value = GameUiState(players[0])
     }
 
