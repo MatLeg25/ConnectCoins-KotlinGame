@@ -40,8 +40,8 @@ class Validator(private val gameboard: Array<Array<Cell>>) {
     }
 
     private fun checkHorizontal(): Boolean {
-        winCombination.clear()
         for (x in rowsRange) {
+            winCombination.clear()
             for (y in columnsRange) {
                 val cell = gameboard[y][x]
                 if (condition(cell)) winCombination.add(cell.cords)
@@ -53,8 +53,8 @@ class Validator(private val gameboard: Array<Array<Cell>>) {
     }
 
     private fun checkVertical(): Boolean {
-        winCombination.clear()
         for (x in rowsRange) {
+            winCombination.clear()
             for (y in columnsRange) {
                 val cell = gameboard[x][y]
                 if (condition(cell)) winCombination.add(cell.cords)
@@ -66,7 +66,6 @@ class Validator(private val gameboard: Array<Array<Cell>>) {
     }
 
     fun skosLtToRb(): Boolean {
-        winCombination.clear()
         val gameBoardT = transformMatrix()
 
         for (x in rowsRange) {
@@ -77,6 +76,7 @@ class Validator(private val gameboard: Array<Array<Cell>>) {
 
         //skosLtToRb()
             for (x in  0 until gameBoardT.size + 1) {
+                winCombination.clear()
                 for (y in  0 until gameBoardT.size + 1) {
                     val cordX = x+y
                     if (cordX < gameBoardT.size) {
@@ -92,7 +92,6 @@ class Validator(private val gameboard: Array<Array<Cell>>) {
     }
 
     fun skosLbToRt(): Boolean {
-        winCombination.clear()
         val gameBoardT = transformMatrix()
 
         for (x in rowsRange) {
@@ -103,6 +102,7 @@ class Validator(private val gameboard: Array<Array<Cell>>) {
 
         // skosLbToRt()
         for (x in gameBoardT.size - 1 downTo 0) {
+            winCombination.clear()
             for (y in  0 until gameBoardT.size + 1) {
                 val cordX = x-y
                 if (cordX >= 0) {

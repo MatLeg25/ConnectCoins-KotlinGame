@@ -44,6 +44,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.connectcoins.data.Cell
 import com.example.connectcoins.data.Player
 import com.example.connectcoins.ui.BottomModal
@@ -61,7 +62,9 @@ class MainActivity : ComponentActivity() {
             val viewModel: GameViewModel = viewModel()
 
             ConnectCoinsTheme {
-                // A surface container using the 'background' color from the theme
+
+
+//                // A surface container using the 'background' color from the theme
                 Surface(
                     //modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -75,7 +78,9 @@ class MainActivity : ComponentActivity() {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
-                        TopBar()
+//                        TopBar()
+
+                        Navigation()
 
                         TableScreen(
                             gameUiState,
@@ -112,7 +117,7 @@ class MainActivity : ComponentActivity() {
 
 @Preview(showBackground = true, widthDp = 500)
 @Composable
-fun TopBar() {
+fun TopBar(navController: NavController? = null) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -132,7 +137,7 @@ fun TopBar() {
                 modifier = Modifier
                     .size(48.dp)
                     .clickable {
-                               Log.w("elox","Open settings")
+                        navController!!.navigate(Screen.ConfigScreen.withArgs("Player name :]"))
                     },
                 shape = CircleShape,
             ) {

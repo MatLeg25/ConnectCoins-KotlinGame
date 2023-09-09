@@ -62,7 +62,7 @@ class GameViewModel(
                 currentPlayer = players[currentPlayerIdx]
             )
         }
-        uiState.value.printInfo()
+       // uiState.value.printInfo()
     }
 
     private fun isEndGame(currentPlayerId: String) {
