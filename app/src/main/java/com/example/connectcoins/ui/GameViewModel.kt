@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.update
 class GameViewModel(
     private val players: List<Player> =
         listOf(
-            Player("Player1", Color.Red), Player("Player2", Color.Blue)
+            Player("Użas", Color.Red), Player("Koszmir", Color.Blue)
         )
 ): ViewModel() {
 
@@ -43,6 +43,8 @@ class GameViewModel(
     }
 
     fun getPlayer(playerId: String): Player? = players.firstOrNull { it.id == playerId }
+
+    fun getPlayers() = players
 
     fun onColumnClick(columnIdx: Int, currentPlayerId: String) {
         val cell = gameboard[columnIdx].findLast { it.playerId == null }

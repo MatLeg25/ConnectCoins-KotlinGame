@@ -20,3 +20,8 @@ data class GameUiState(
         Log.w("elox","------------------------------------------------------------------------")
     }
 }
+
+data class GameConfigState(
+    val players: List<Player>,
+    val gameBoardSize: Int,
+)

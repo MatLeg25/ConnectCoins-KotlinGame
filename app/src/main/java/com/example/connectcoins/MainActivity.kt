@@ -1,7 +1,6 @@
 package com.example.connectcoins
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -12,7 +11,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -59,8 +57,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
 
-            val viewModel: GameViewModel = viewModel()
-
             ConnectCoinsTheme {
 
 
@@ -80,11 +76,11 @@ class MainActivity : ComponentActivity() {
 
 //                        TopBar()
 
-                        Navigation()
+                        Navigation(gameViewModel)
 
                         TableScreen(
                             gameUiState,
-                            viewModel,
+                            gameViewModel,
                         )
 
                         Text(
@@ -94,7 +90,7 @@ class MainActivity : ComponentActivity() {
 
                         if (gameUiState.isGameOver) {
                             Button(onClick = {
-                                viewModel.resetGame()
+                                gameViewModel.resetGame()
                             }) {
                                 Text(text = getString(R.string.restart_game))
                             }
