@@ -20,9 +20,9 @@ class GameViewModel(
 
     var gameboard: Array<Array<Cell>>
     private val totalMoves: Int
-    private val validator: Validator
+    private var validator: Validator
 
-    val SIZE = 3
+    val SIZE = 4
     val RANGE = 0 until SIZE
 
     // Game UI state
@@ -38,6 +38,7 @@ class GameViewModel(
 
     fun resetGame() {
         gameboard = generateGameBoard()
+        validator = Validator(gameboard)
         _uiState.value = GameUiState(players[0])
     }
 

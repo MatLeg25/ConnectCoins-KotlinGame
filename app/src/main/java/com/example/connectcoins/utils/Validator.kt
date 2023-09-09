@@ -18,116 +18,124 @@ class Validator(private val gameboard: Array<Array<Cell>>) {
         playerId = currentPlayerId
 
         return if (checkHorizontal()) {
-            Log.w("elox",">>>WIN by checkHorizontal \n WIN COMBINATION: $winCombination")
-            winCombination.forEach { cords ->
-                gameboard[cords.first][cords.second].isWin = true
-            }
+            Log.w("elox",">>>WIN by checkHorizontal")
+            setWinCombination()
             winCombination
         }
         else if (checkVertical()) {
-            Log.w("elox",">>>WIN by checkVertical \n WIN COMBINATION: $winCombination")
-            winCombination.forEach { cords ->
-                gameboard[cords.first][cords.second].isWin = true
-            }
+            Log.w("elox",">>>WIN by checkVertical")
+            setWinCombination()
             winCombination
-//        }
-//        else if (checkDiagonalLeftBottomAndRightTop()) {
-//            Log.w("elox",">>>WIN by checkDiagonalLeftBottomAndRightTop")
-//            winCombination
-//    }
-//        else if (checkDiagonalRightBottom()) {
-//            Log.w("elox",">>>WIN by checkDiagonalRightBottom")
-//            winCombination
-//        }
-//        else if (checkDiagonalLeftTop()){
-//            Log.w("elox",">>>WIN by checkDiagonalLeftTop")
-//            winCombination
+        }
+        else if (skosLtToRb()) {
+            Log.w("elox",">>>WIN by checkDiagonalRightBottom")
+            setWinCombination()
+            winCombination
+        }
+        else if (skosLbToRt()){
+            Log.w("elox",">>>WIN by checkDiagonalLeftTop")
+            setWinCombination()
+            winCombination
         }  else null
     }
 
     private fun checkHorizontal(): Boolean {
-        var result = 0
+        winCombination.clear()
         for (x in rowsRange) {
             for (y in columnsRange) {
                 val cell = gameboard[y][x]
-                result = if (condition(cell))  {
-                    winCombination.add(Pair(y,x))
-                    result + 1
-                } else {
-                    winCombination.clear()
-                    0
-                }
-                if (result == WIN) return true
+                if (condition(cell)) winCombination.add(cell.cords)
+                else winCombination.clear()
+                if (winCombination.size == WIN) return true
             }
-            result = 0
         }
         return false
     }
 
     private fun checkVertical(): Boolean {
-        var result = 0
+        winCombination.clear()
         for (x in rowsRange) {
             for (y in columnsRange) {
                 val cell = gameboard[x][y]
-                result = if (condition(cell))  {
-                    winCombination.add(Pair(x,y))
-                    result + 1
-                } else {
-                    winCombination.clear()
-                    0
-                }
-                if (result == WIN) return true
+                if (condition(cell)) winCombination.add(cell.cords)
+                else winCombination.clear()
+                if (winCombination.size == WIN) return true
             }
-            result = 0
         }
         return false
     }
 
-//    fun checkDiagonalLeftBottomAndRightTop():Boolean {
-//        var result1 = 0
-//        var result2 = 0
-//        for (x in 0 ..DATA.SIZE) {
-//            for (y in 0 .. DATA.SIZE - x) {
-//                val pointLB = Pair(x+y,y)
-//                val pointRT = Pair(y,x+y)
-//                val cell1 = gameboard[pointLB.first][pointLB.second]
-//                result1 = if (cell1.state.value) result1 + 1 else 0
-//                if (result1 == WIN) return true
-//
-//                val cell2 = gameboard[pointRT.first][pointRT.second]
-//                result2 = if (cell2.state.value) result2 + 1 else 0
-//                if (result2 == WIN) return true
-//            }
-//        }
-//        return false
-//    }
-//
-//
-//    fun checkDiagonalRightBottom(): Boolean {
-//        var result = 0
-//        for (x in 0 until DATA.SIZE +1) {
-//            for (y in 0 until DATA.SIZE -x+1) {
-//                val pointRB = Pair(x+y, DATA.SIZE -y)
-//                val cell = gameboard[pointRB.first][pointRB.second]
-//                result = if (cell.state.value) result + 1 else 0
-//                if (result == WIN) return true
-//            }
-//        }
-//        return false
-//    }
-//
-//    fun checkDiagonalLeftTop(): Boolean {
-//        var result = 0
-//        for (x in 0 until DATA.SIZE +1) {
-//            for (y in x until DATA.SIZE +1) {
-//                val pointLT = Pair(DATA.SIZE -y,y-x)
-//                val cell = gameboard[pointLT.first][pointLT.second]
-//                result = if (cell.state.value) result + 1 else 0
-//                if (result == WIN) return true
-//            }
-//        }
-//        return false
-//    }
+    fun skosLtToRb(): Boolean {
+        winCombination.clear()
+        val gameBoardT = transformMatrix()
+
+        for (x in rowsRange) {
+            for (y in columnsRange) {
+                gameBoardT[x + rowsRange.last][y] = gameboard[x][y]
+            }
+        }
+
+        //skosLtToRb()
+            for (x in  0 until gameBoardT.size + 1) {
+                for (y in  0 until gameBoardT.size + 1) {
+                    val cordX = x+y
+                    if (cordX < gameBoardT.size) {
+                        val cell = gameBoardT[cordX][y]
+                        if (condition(cell)) winCombination.add(cell.cords)
+                        else winCombination.clear()
+                        if (winCombination.size == WIN) return true
+                    }
+                }
+            }
+
+        return false
+    }
+
+    fun skosLbToRt(): Boolean {
+        winCombination.clear()
+        val gameBoardT = transformMatrix()
+
+        for (x in rowsRange) {
+            for (y in columnsRange) {
+                gameBoardT[x][y] = gameboard[x][y]
+            }
+        }
+
+        // skosLbToRt()
+        for (x in gameBoardT.size - 1 downTo 0) {
+            for (y in  0 until gameBoardT.size + 1) {
+                val cordX = x-y
+                if (cordX >= 0) {
+                    val cell = gameBoardT[cordX][y]
+                    if (condition(cell)) winCombination.add(cell.cords)
+                    else winCombination.clear()
+                    if (winCombination.size == WIN) return true
+                }
+            }
+        }
+
+        return false
+
+    }
+
+    private fun transformMatrix(): Array<Array<Cell>> {
+        val rangeX = rowsRange.first .. (rowsRange.last * 2)
+        val rangeY = columnsRange.first .. (columnsRange.last * 2)
+        return rangeX.map { x->
+            rangeY.map { y ->
+                Cell(x, "O", Pair(x, y))
+            }.toTypedArray()
+        }.toTypedArray()
+    }
+
+    private fun setWinCombination() {
+        Log.e("elox",">>>winCombination $winCombination")
+        winCombination.forEach { cords ->
+            gameboard[cords.first][cords.second].isWin = true
+        }
+    }
+
+
 
 
 }
