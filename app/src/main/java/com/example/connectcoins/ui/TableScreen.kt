@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -78,8 +77,7 @@ fun CellItem(item: Cell, color: Color) {
     Box(
         modifier = Modifier
             .padding(8.dp)
-            .size(50.dp)
-            //.aspectRatio(1f)
+//            .size()
             .clip(RoundedCornerShape(25.dp))
             .background(cellColor),
 

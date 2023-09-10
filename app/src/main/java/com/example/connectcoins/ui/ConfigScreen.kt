@@ -1,6 +1,5 @@
 package com.example.connectcoins.ui
 
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -83,8 +82,8 @@ fun ConfigScreen(
 
             Spacer(modifier = Modifier.height(30.dp))
 
-            DropdownMenu()
-            
+            DropdownMenu(viewModel)
+
         }
 
     }
@@ -92,11 +91,11 @@ fun ConfigScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DropdownMenu() {
+fun DropdownMenu(
+    viewModel: GameViewModel
+) {
 
-    val options = listOf<String>(
-        "4x4", "5x5", "6x6"
-    )
+    val options = (3..10).toList()
 
     var isExpanded by remember {
         mutableStateOf(false)
@@ -126,16 +125,19 @@ fun DropdownMenu() {
             onDismissRequest = { isExpanded = false}
         ) {
             options.forEach { option ->
+                val displayedText = "$option x $option"
                 DropdownMenuItem(
                     text = {
-                        Text(option)
+                        Text(displayedText)
                     },
                     onClick = {
-                        selectedOption = option
+                        selectedOption = displayedText
+                        viewModel.setGameBoardSize(option)
                         isExpanded = false
-                    })
+                    }
+                )
             }
-            }
+        }
     }
 
 }

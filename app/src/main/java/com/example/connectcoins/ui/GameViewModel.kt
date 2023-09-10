@@ -1,5 +1,6 @@
 package com.example.connectcoins.ui
 
+import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
@@ -13,12 +14,10 @@ import kotlinx.coroutines.flow.update
 
 class GameViewModel(): ViewModel() {
 
-    var gameboard: Array<Array<Cell>>
-    private val totalMoves: Int
-    private var validator: Validator
-
-    val SIZE = 4
-    val RANGE = 0 until SIZE
+    lateinit var gameboard: Array<Array<Cell>>
+    private var totalMoves: Int = 0
+    private lateinit var validator: Validator
+    private var gameBoardSize = 3
 
     // Game UI state
     private val _settings = MutableStateFlow(
@@ -26,7 +25,7 @@ class GameViewModel(): ViewModel() {
             listOf(
                 Player(name = "Użas", color = Color.Red), Player(name = "Koszmir", color = Color.Blue)
             ),
-            4
+            gameBoardSize
         )
     )
     val settings: StateFlow<GameSettingsState> = _settings.asStateFlow()
@@ -40,20 +39,25 @@ class GameViewModel(): ViewModel() {
 
 
     init {
-        gameboard = generateGameBoard()
-        totalMoves = gameboard.size * gameboard[0].size
-        validator = Validator(gameboard)
+         resetGame()
     }
 
     fun resetGame() {
-        gameboard = generateGameBoard()
+        Log.w("elox"," RESET GAME!!!")
+        gameboard = generateGameBoard(gameBoardSize)
+        totalMoves = gameboard.size * gameboard[0].size
         validator = Validator(gameboard)
-        _uiState.value = GameUiState(_settings.value.players[0])
+        _uiState.update {
+            it.copy(
+                currentPlayer = _settings.value.players[0],
+                moves = 0,
+                isGameOver = false,
+                winner = null,
+            )
+        }
     }
 
     fun getPlayer(playerId: String): Player =_settings.value.players.firstOrNull { it.id == playerId }!!
-
-    fun getPlayers() = _settings.value.players
 
     fun onColumnClick(columnIdx: Int, currentPlayerId: String) {
         val cell = gameboard[columnIdx].findLast { it.playerId == null }
@@ -91,27 +95,14 @@ class GameViewModel(): ViewModel() {
         }
     }
 
-    private fun generateGameBoard(): Array<Array<Cell>> = RANGE.map { x->
-        RANGE.map { y ->
+    private fun generateGameBoard(size: Int): Array<Array<Cell>> = ( 0 until size).map { x->
+        ( 0 until size).map { y ->
             Cell(x, x.toString(), Pair(x, y))
         }.toTypedArray()
     }.toTypedArray()
 
-
-    fun updateSetting(players: List<Player>) {
-        _settings.update {
-            it.copy(
-                players = players,
-            )
-        }
-    }
-
     fun updateSetting() {
-        _settings.update {
-            it.copy(
-                players = players
-            )
-        }
+        resetGame()
     }
 
     fun changePlayerColor(player: Player) {
@@ -123,6 +114,12 @@ class GameViewModel(): ViewModel() {
     fun changePlayerName(player: Player, name: String) {
         val playerIndex = players.indexOf(player)
         players[playerIndex] = player.copy(name = name)
+    }
+
+    fun setGameBoardSize(size: Int) {
+        Log.e("elox","Set gameboard size == $gameBoardSize : $size")
+        gameBoardSize = size
+        Log.e("elox","Set gameboard size == $gameBoardSize : $size")
     }
 
     private fun getNextColor(currentColor: Color): Color {
