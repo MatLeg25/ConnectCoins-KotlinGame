@@ -1,8 +1,6 @@
 package com.example.connectcoins
 
 import android.os.Bundle
-import android.util.Log
-import android.window.OnBackInvokedDispatcher
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen

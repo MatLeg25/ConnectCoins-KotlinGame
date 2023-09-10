@@ -14,6 +14,11 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
@@ -29,10 +34,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.connectcoins.R
+import kotlinx.coroutines.delay
+import kotlin.time.Duration.Companion.seconds
 
 @Preview(showBackground = true, widthDp = 500)
 @Composable
 fun TopBar(navController: NavController? = null) {
+
+    var time by remember { mutableStateOf(0) }
+    LaunchedEffect(Unit) {
+        while(true) {
+            delay(1.seconds)
+            time++
+        }
+    }
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -46,6 +62,10 @@ fun TopBar(navController: NavController? = null) {
         ) {
             ColourText(
                 text = stringResource(id = R.string.app_name)
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            ColourText(
+                text = stringResource(id = R.string.time_X, time)
             )
             Spacer(modifier = Modifier.weight(1f))
             Card(

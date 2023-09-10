@@ -22,9 +22,7 @@ class GameViewModel(): ViewModel() {
     // Game UI state
     private val _settings = MutableStateFlow(
         GameSettingsState(
-            listOf(
-                Player(name = "Użas", color = Color.Red), Player(name = "Koszmir", color = Color.Blue)
-            ),
+            getDefaultPlayers(),
             gameBoardSize
         )
     )
@@ -34,13 +32,19 @@ class GameViewModel(): ViewModel() {
         addAll(_settings.value.players.toList())
     }
 
-    private val _uiState = MutableStateFlow(GameUiState(_settings.value.players[0]))
+    private val _uiState = MutableStateFlow(GameUiState(players.first()))
     val uiState: StateFlow<GameUiState> = _uiState.asStateFlow()
 
 
     init {
          resetGame()
     }
+
+    private fun getDefaultPlayers(): List<Player> = listOf(
+        Player(name = "Player1", color = Color.Red),
+        Player(name = "Player2", color = Color.Blue)
+    )
+
 
     fun resetGame() {
         Log.w("elox"," RESET GAME!!!")
@@ -49,7 +53,7 @@ class GameViewModel(): ViewModel() {
         validator = Validator(gameboard)
         _uiState.update {
             it.copy(
-                currentPlayer = _settings.value.players[0],
+                currentPlayer = _settings.value.players.first(),
                 moves = 0,
                 isGameOver = false,
                 winner = null,
@@ -60,6 +64,9 @@ class GameViewModel(): ViewModel() {
     fun getPlayer(playerId: String): Player =_settings.value.players.firstOrNull { it.id == playerId }!!
 
     fun onColumnClick(columnIdx: Int, currentPlayerId: String) {
+        //prevent ui changes if game is ended
+        if (_uiState.value.isGameOver) return
+
         val cell = gameboard[columnIdx].findLast { it.playerId == null }
         cell?.let {
             it.playerId = currentPlayerId

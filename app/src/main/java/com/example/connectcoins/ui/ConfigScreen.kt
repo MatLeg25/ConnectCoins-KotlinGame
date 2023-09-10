@@ -75,7 +75,7 @@ fun ConfigScreen(
 
             Button(
                 onClick = {
-                    viewModel.updateSetting() //todo update
+                    //viewModel.updateSetting() //todo update
                 }) {
                 Text(text = stringResource(id = R.string.save))
             }
