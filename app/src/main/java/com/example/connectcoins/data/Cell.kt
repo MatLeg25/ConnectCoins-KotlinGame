@@ -3,7 +3,7 @@ package com.example.connectcoins.data
 import androidx.compose.ui.graphics.Color
 import java.util.UUID
 
-class Cell(
+data class Cell(
     val index: Int,
     val text: String,
     val cords: Pair<Int, Int>,
@@ -11,9 +11,12 @@ class Cell(
     var isWin: Boolean = false
 )
 
-class Player(
-    val name: String,
-    val color: Color
+data class Player(
+    var id: String = "",
+    var name: String,
+    var color: Color
 ) {
-    val id: String = UUID.randomUUID().toString()
+   init {
+       if (id.isEmpty()) id = UUID.randomUUID().toString()
+   }
 }

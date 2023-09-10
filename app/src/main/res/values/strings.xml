@@ -1,11 +1,14 @@
 <resources>
     <string name="app_name">Connect Coins</string>
     <string name="restart_game">Restart game</string>
+    <string name="player_X">Player %1$s</string>
     <string name="current_player_X">Current player: %1$s</string>
     <string name="show_stats">Show stats</string>
     <string name="game_stats">Game stats</string>
+    <string name="game_settings">Game settings</string>
     <string name="game_state_X">Game state: %1$s</string>
     <string name="game_ended">ENDED</string>
+    <string name="save">"Save"</string>
     <string name="close">Close</string>
     <string name="game_in_progress">IN PROGRESS</string>
     <string name="game_no_winner">The game has no winner, draw.</string>

@@ -21,7 +21,7 @@ data class GameUiState(
     }
 }
 
-data class GameConfigState(
+data class GameSettingsState(
     val players: List<Player>,
     val gameBoardSize: Int,
 )

@@ -26,11 +26,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.connectcoins.R
 
 @Preview(showBackground = true, widthDp = 500)
 @Composable
@@ -38,57 +39,46 @@ fun ConfigScreen(
     name: String? = "name",
     viewModel: GameViewModel = viewModel(),
 ) {
-    val colors = listOf(
-        Color(0xFF70C70F),
-        Color.White,
-        Color.Red,
-        Color.Green,
-        Color.Blue,
-        Color.Yellow,
-        Color.Cyan,
-        Color.Magenta,
-    )
+    val context = LocalContext.current
+
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center,
     ) {
-        val context = LocalContext.current
+
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Game settings: ")
+            Text(stringResource(id = R.string.game_settings))
             Spacer(modifier = Modifier.height(50.dp))
-            viewModel.getPlayers().forEachIndexed { index, player ->
-                var playerName by remember {
-                    mutableStateOf(player.name)
-                }
-                var playerColor by remember {
-                    mutableStateOf(colors[index])
-                }
+            viewModel.players.forEachIndexed { index, player ->
                 Row {
                     Box(
                         modifier = Modifier
                             .clip(CircleShape)
                             .size(50.dp)
-                            .background(playerColor)
+                            .background(player.color)
                             .clickable {
-                                playerColor = getNextColor(playerColor)
+                                viewModel.changePlayerColor(player)
                             }
                     ) {
-                        Text(text = "Player ${index + 1}: ")
+                        Text(stringResource(id = R.string.player_X, index + 1))
                     }
-                    TextField(value = playerName, onValueChange = {
-                        playerName = it
+                    TextField(value = player.name, onValueChange = {
+                        viewModel.changePlayerName(player, it)
                     }, label = {
-                        Text("Player ${index + 1}")
+                        Text(stringResource(id = R.string.player_X, index + 1))
                     })
 
                 }
                 Spacer(modifier = Modifier.height(30.dp))
             }
 
-            Button(onClick = { Toast.makeText(context, "Jeszcze nie działa :|", Toast.LENGTH_LONG).show() }) {
-                Text(text = "Save")
+            Button(
+                onClick = {
+                    viewModel.updateSetting() //todo update
+                }) {
+                Text(text = stringResource(id = R.string.save))
             }
 
             Spacer(modifier = Modifier.height(30.dp))
@@ -150,12 +140,3 @@ fun DropdownMenu() {
 
 }
 
-fun getNextColor(color: Color): Color {
-    val colors = listOf(
-        Color.Black, Color.DarkGray, Color.Gray, Color.LightGray, Color.White, Color.Red, Color.Green,
-        Color.Blue, Color.Yellow, Color.Cyan, Color.Magenta,
-    )
-    val currentColorIndex = colors.indexOf(color)
-    val nextColorIndex = (currentColorIndex + 1).takeIf { it<colors.size } ?: 0
-    return colors[nextColorIndex]
-}

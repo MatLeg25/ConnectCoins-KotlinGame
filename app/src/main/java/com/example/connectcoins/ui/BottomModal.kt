@@ -37,7 +37,7 @@ import kotlinx.coroutines.launch
 @Preview
 fun BottomModal(
     state: SheetValue = SheetValue.Expanded,
-    gameUiState: GameUiState = GameUiState(Player("x", Color.Transparent))
+    gameUiState: GameUiState = GameUiState(Player(name = "x", color = Color.Transparent))
 ) {
     val sheetState = rememberStandardBottomSheetState(
         initialValue = state,

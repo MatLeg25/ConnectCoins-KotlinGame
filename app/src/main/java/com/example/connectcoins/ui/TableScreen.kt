@@ -26,7 +26,7 @@ import com.example.connectcoins.data.Player
 @Preview(showBackground = true, widthDp = 500)
 @Composable
 fun TableScreen(
-    gameUiState: GameUiState = GameUiState(Player("a", Color.Red)),
+    gameUiState: GameUiState = GameUiState(Player(name = "a", color = Color.Red)),
     viewModel: GameViewModel = viewModel(),
 ) {
 
@@ -62,7 +62,7 @@ fun SingleColumn(
     ) {
         Text(text = "${columnIdx + 1}")
         items.forEach {
-            val color = if (it.playerId != null) viewModel.getPlayer(it.playerId!!)!!.color else Color.Green
+            val color = if (it.playerId != null) viewModel.getPlayer(it.playerId!!).color else Color.Green
             CellItem(item = it, color)
         }
 
