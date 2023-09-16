@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Connect Coins</string>
+    <string name="start_game">Start game!</string>
     <string name="restart_game">Restart game</string>
     <string name="player_X">Player %1$s</string>
     <string name="current_player_X">Current player: %1$s</string>

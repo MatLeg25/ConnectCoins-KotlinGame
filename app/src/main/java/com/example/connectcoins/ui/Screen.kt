@@ -4,6 +4,7 @@ sealed class Screen(val route: String) {
     object MainScreen: Screen("main_screen")
     object ConfigScreen: Screen("config_screen")
 
+    //handle not-optional args
     fun withArgs(vararg args: String): String {
         return buildString {
             append(route)

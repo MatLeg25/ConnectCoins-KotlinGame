@@ -108,10 +108,6 @@ class GameViewModel(): ViewModel() {
         }.toTypedArray()
     }.toTypedArray()
 
-    fun updateSetting() {
-        resetGame()
-    }
-
     fun changePlayerColor(player: Player) {
         val nextColor = getNextColor(player.color)
         val playerIndex = players.indexOf(player)

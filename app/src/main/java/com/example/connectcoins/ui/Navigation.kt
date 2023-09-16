@@ -10,21 +10,5 @@ import androidx.navigation.navArgument
 @Composable
 fun Navigation(gameViewModel: GameViewModel) {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Screen.MainScreen.route) {
-        composable(route = Screen.MainScreen.route) {
-            TopBar(navController)
-        }
-        composable(
-            route = Screen.ConfigScreen.route + "/{name}", //"?name={name}",
-            arguments = listOf(
-                navArgument("name") {
-                type = NavType.StringType
-                defaultValue = "Player :D"
-                nullable = true
-                }
-            )
-        ) { entry ->
-            ConfigScreen(name = entry.arguments?.getString("name"), gameViewModel)
-        }
-    }
+    //todo move from MainActivity here
 }

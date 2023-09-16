@@ -72,7 +72,7 @@ fun TopBar(navController: NavController? = null) {
                 modifier = Modifier
                     .size(48.dp)
                     .clickable {
-                        navController!!.navigate(Screen.ConfigScreen.withArgs("Player name :]"))
+                        navController!!.navigate(Screen.ConfigScreen.route)
                     },
                 shape = CircleShape,
             ) {

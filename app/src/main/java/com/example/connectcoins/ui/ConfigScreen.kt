@@ -30,6 +30,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.connectcoins.R
 
 @Preview(showBackground = true, widthDp = 500)
@@ -37,6 +38,7 @@ import com.example.connectcoins.R
 fun ConfigScreen(
     name: String? = "name",
     viewModel: GameViewModel = viewModel(),
+    navController: NavController? = null,
 ) {
     val context = LocalContext.current
 
@@ -73,16 +75,19 @@ fun ConfigScreen(
                 Spacer(modifier = Modifier.height(30.dp))
             }
 
-            Button(
-                onClick = {
-                    //viewModel.updateSetting() //todo update
-                }) {
-                Text(text = stringResource(id = R.string.save))
-            }
-
             Spacer(modifier = Modifier.height(30.dp))
 
             DropdownMenu(viewModel)
+
+            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(30.dp))
+
+            Button(
+                onClick = {
+                    navController!!.navigate(Screen.MainScreen.route)
+                }) {
+                Text(text = stringResource(id = R.string.start_game))
+            }
 
         }
 
