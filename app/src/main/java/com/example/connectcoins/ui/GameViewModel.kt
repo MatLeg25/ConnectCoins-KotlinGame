@@ -21,6 +21,11 @@ class GameViewModel(): ViewModel() {
     var backgroundColor = Color.Green
         private set
 
+    private val COLORS = listOf(
+        Color.Black, Color.DarkGray, Color.Gray, Color.LightGray, Color.White, Color.Red, Color.Green,
+        Color.Blue, Color.Yellow, Color.Cyan, Color.Magenta,
+    )
+
     // Game UI state
     private val _settings = MutableStateFlow(
         GameSettingsState(
@@ -145,20 +150,16 @@ class GameViewModel(): ViewModel() {
         }
     }
 
-    val allColors = listOf(
-        Color.Black, Color.DarkGray, Color.Gray, Color.LightGray, Color.White, Color.Red, Color.Green,
-        Color.Blue, Color.Yellow, Color.Cyan, Color.Magenta,
-    )
+
     private fun getNextColor(currentColor: Color): Color {
         val usedColors = players.map { it.color }.toMutableSet()
         usedColors.add(backgroundColor)
 
-        val currentColorIndex = allColors.indexOf(currentColor)
-        val nextColorIndex = (currentColorIndex + 1).takeIf { it<allColors.size } ?: 0
+        val currentColorIndex = COLORS.indexOf(currentColor)
+        val nextColorIndex = (currentColorIndex + 1).takeIf { it < COLORS.size } ?: 0
 
-        val nextColor = allColors[nextColorIndex]
-        return if (nextColor in usedColors) getNextColor(nextColor)
-                else nextColor
+        val nextColor = COLORS[nextColorIndex]
+        return if (nextColor in usedColors) getNextColor(nextColor) else nextColor
     }
 
 

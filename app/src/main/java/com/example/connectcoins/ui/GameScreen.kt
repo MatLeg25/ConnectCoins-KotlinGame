@@ -52,10 +52,7 @@ fun GameScreen(
 
                 val gameUiState by gameViewModel.uiState.collectAsState()
 
-                TableScreen(
-                    gameUiState,
-                    gameViewModel,
-                )
+                GameBoardScreen(gameUiState, gameViewModel,)
 
                 Text(
                     modifier = Modifier.background(gameUiState.currentPlayer.color),
