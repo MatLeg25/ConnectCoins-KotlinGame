@@ -125,6 +125,24 @@ class GameViewModel(): ViewModel() {
         Log.e("elox","Set gameboard size == $gameBoardSize : $size")
     }
 
+    fun setConfig() {
+        resetGame()
+        _settings.update { settings ->
+            settings.copy(
+                players = players,
+                gameBoardSize = gameBoardSize
+            )
+        }
+        _uiState.update {  currentState ->
+            val currentMoves = 0
+            val currentPlayerIdx = 0
+            currentState.copy(
+                moves = currentMoves,
+                currentPlayer = _settings.value.players[currentPlayerIdx]
+            )
+        }
+    }
+
     private fun getNextColor(currentColor: Color): Color {
         val colors = listOf(
             Color.Black, Color.DarkGray, Color.Gray, Color.LightGray, Color.White, Color.Red, Color.Green,

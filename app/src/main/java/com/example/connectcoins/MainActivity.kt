@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 //startDestination = Screen.ConfigScreen.route
                 NavHost(navController = navController, startDestination = Screen.ConfigScreen.route) {
-                    composable(route = Screen.MainScreen.route) {
+                    composable(route = Screen.GameScreen.route) {
                         GameScreen(gameViewModel, navController)//TopBar(navController) //MainScreen(gameViewModel = gameViewModel)
                     }
                     composable(

@@ -1,7 +1,7 @@
 package com.example.connectcoins.ui
 
 sealed class Screen(val route: String) {
-    object MainScreen: Screen("main_screen")
+    object GameScreen: Screen("game_screen")
     object ConfigScreen: Screen("config_screen")
 
     //handle not-optional args

@@ -84,7 +84,8 @@ fun ConfigScreen(
 
             Button(
                 onClick = {
-                    navController!!.navigate(Screen.MainScreen.route)
+                    viewModel.setConfig()
+                    navController!!.navigate(Screen.GameScreen.route)
                 }) {
                 Text(text = stringResource(id = R.string.start_game))
             }
@@ -106,8 +107,9 @@ fun DropdownMenu(
         mutableStateOf(false)
     }
 
+    val s = viewModel.gameboard.size
     var selectedOption by remember {
-        mutableStateOf("")
+        mutableStateOf(optionTextFormatter(s, s))
     }
 
     ExposedDropdownMenuBox(
@@ -130,7 +132,7 @@ fun DropdownMenu(
             onDismissRequest = { isExpanded = false}
         ) {
             options.forEach { option ->
-                val displayedText = "$option x $option"
+                val displayedText = optionTextFormatter(option, option)
                 DropdownMenuItem(
                     text = {
                         Text(displayedText)
@@ -146,4 +148,6 @@ fun DropdownMenu(
     }
 
 }
+
+fun optionTextFormatter(rows: Int, columns: Int) = "$rows x $columns"
 
