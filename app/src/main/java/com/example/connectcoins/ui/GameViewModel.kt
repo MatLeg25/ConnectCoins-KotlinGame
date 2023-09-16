@@ -18,6 +18,8 @@ class GameViewModel(): ViewModel() {
     private var totalMoves: Int = 0
     private lateinit var validator: Validator
     private var gameBoardSize = 3
+    var backgroundColor = Color.Green
+        private set
 
     // Game UI state
     private val _settings = MutableStateFlow(
@@ -143,14 +145,20 @@ class GameViewModel(): ViewModel() {
         }
     }
 
+    val allColors = listOf(
+        Color.Black, Color.DarkGray, Color.Gray, Color.LightGray, Color.White, Color.Red, Color.Green,
+        Color.Blue, Color.Yellow, Color.Cyan, Color.Magenta,
+    )
     private fun getNextColor(currentColor: Color): Color {
-        val colors = listOf(
-            Color.Black, Color.DarkGray, Color.Gray, Color.LightGray, Color.White, Color.Red, Color.Green,
-            Color.Blue, Color.Yellow, Color.Cyan, Color.Magenta,
-        )
-        val currentColorIndex = colors.indexOf(currentColor)
-        val nextColorIndex = (currentColorIndex + 1).takeIf { it<colors.size } ?: 0
-        return colors[nextColorIndex]
+        val usedColors = players.map { it.color }.toMutableSet()
+        usedColors.add(backgroundColor)
+
+        val currentColorIndex = allColors.indexOf(currentColor)
+        val nextColorIndex = (currentColorIndex + 1).takeIf { it<allColors.size } ?: 0
+
+        val nextColor = allColors[nextColorIndex]
+        return if (nextColor in usedColors) getNextColor(nextColor)
+                else nextColor
     }
 
 

@@ -61,7 +61,7 @@ fun SingleColumn(
     ) {
         Text(text = "${columnIdx + 1}")
         items.forEach {
-            val color = if (it.playerId != null) viewModel.getPlayer(it.playerId!!).color else Color.Green
+            val color = if (it.playerId != null) viewModel.getPlayer(it.playerId!!).color else viewModel.backgroundColor
             CellItem(item = it, color)
         }
 
