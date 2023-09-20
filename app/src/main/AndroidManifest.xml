@@ -6,9 +6,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/baseline_cookie_24"
+        android:icon="@mipmap/ic_coins"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/baseline_cookie_24"
+        android:roundIcon="@mipmap/ic_coins_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.App.Starting"
         tools:targetApi="31">
