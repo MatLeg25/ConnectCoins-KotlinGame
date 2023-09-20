@@ -6,6 +6,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import com.example.connectcoins.data.models.Cell
 import com.example.connectcoins.data.models.Player
+import com.example.connectcoins.utils.Utils
 import com.example.connectcoins.utils.Validator
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,10 +23,7 @@ class GameViewModel(): ViewModel() {
     var backgroundColor = Color.Green
         private set
 
-    private val COLORS = listOf(
-        Color.Black, Color.DarkGray, Color.Gray, Color.LightGray, Color.White, Color.Red, Color.Green,
-        Color.Blue, Color.Yellow, Color.Cyan, Color.Magenta,
-    )
+
 
     // Game UI state
     private val _settings = MutableStateFlow(
@@ -156,10 +154,10 @@ class GameViewModel(): ViewModel() {
         val usedColors = players.map { it.color }.toMutableSet()
         usedColors.add(backgroundColor)
 
-        val currentColorIndex = COLORS.indexOf(currentColor)
-        val nextColorIndex = (currentColorIndex + 1).takeIf { it < COLORS.size } ?: 0
+        val currentColorIndex = Utils.COIN_COLORS.indexOf(currentColor)
+        val nextColorIndex = (currentColorIndex + 1).takeIf { it < Utils.COIN_COLORS.size } ?: 0
 
-        val nextColor = COLORS[nextColorIndex]
+        val nextColor = Utils.COIN_COLORS[nextColorIndex]
         return if (nextColor in usedColors) getNextColor(nextColor) else nextColor
     }
 

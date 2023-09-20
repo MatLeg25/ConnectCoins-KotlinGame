@@ -37,6 +37,7 @@ import com.example.connectcoins.R
 @Composable
 fun ConfigScreen(
     name: String? = "name",
+    changeBackground: () -> Unit = {},
     viewModel: GameViewModel = viewModel(),
     navController: NavController? = null,
 ) {
@@ -78,6 +79,14 @@ fun ConfigScreen(
             Spacer(modifier = Modifier.height(30.dp))
 
             DropdownMenu(viewModel)
+
+            Spacer(modifier = Modifier.height(30.dp))
+
+            Button(
+                onClick = changeBackground
+            ) {
+                Text(text = stringResource(id = R.string.change_background))
+            }
 
             Spacer(modifier = Modifier.height(30.dp))
             Spacer(modifier = Modifier.height(30.dp))
