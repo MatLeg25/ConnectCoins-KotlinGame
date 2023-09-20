@@ -17,7 +17,8 @@ class GameViewModel(): ViewModel() {
     lateinit var gameboard: Array<Array<Cell>>
     private var totalMoves: Int = 0
     private lateinit var validator: Validator
-    private var gameBoardSize = 3
+    var gameBoardSize = 3
+        private set
     var backgroundColor = Color.Green
         private set
 
