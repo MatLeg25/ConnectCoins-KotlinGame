@@ -1,4 +1,4 @@
-package com.example.connectcoins.data
+package com.example.connectcoins.data.models
 
 import androidx.compose.ui.graphics.Color
 import java.util.UUID
@@ -10,13 +10,3 @@ data class Cell(
     var playerId: String? = null,
     var isWin: Boolean = false
 )
-
-data class Player(
-    var id: String = "",
-    var name: String,
-    var color: Color
-) {
-   init {
-       if (id.isEmpty()) id = UUID.randomUUID().toString()
-   }
-}

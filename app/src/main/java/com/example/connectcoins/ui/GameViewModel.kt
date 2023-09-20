@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
-import com.example.connectcoins.data.Cell
-import com.example.connectcoins.data.Player
+import com.example.connectcoins.data.models.Cell
+import com.example.connectcoins.data.models.Player
 import com.example.connectcoins.utils.Validator
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -69,7 +69,7 @@ class GameViewModel(): ViewModel() {
         }
     }
 
-    fun getPlayer(playerId: String): Player =_settings.value.players.firstOrNull { it.id == playerId }!!
+    fun getPlayer(playerId: String): Player = _settings.value.players.firstOrNull { it.id == playerId }!!
 
     fun onColumnClick(columnIdx: Int, currentPlayerId: String) {
         //prevent ui changes if game is ended
@@ -124,7 +124,7 @@ class GameViewModel(): ViewModel() {
 
     fun changePlayerName(player: Player, name: String) {
         val playerIndex = players.indexOf(player)
-        players[playerIndex] = player.copy(name = name)
+        if (playerIndex >=0) players[playerIndex] = player.copy(name = name)
     }
 
     fun setGameBoardSize(size: Int) {

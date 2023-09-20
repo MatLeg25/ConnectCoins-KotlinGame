@@ -1,7 +1,7 @@
 package com.example.connectcoins.utils
 
 import android.util.Log
-import com.example.connectcoins.data.Cell
+import com.example.connectcoins.data.models.Cell
 
 class Validator(private val gameboard: Array<Array<Cell>>) {
 
