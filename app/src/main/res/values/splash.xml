@@ -2,9 +2,7 @@
 <resources>
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@drawable/wallhaven_j5px5q</item>
-
-        <item name="windowSplashScreenAnimatedIcon">@drawable/baseline_cookie_24</item>
-
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_coins_round</item>
         <item name="postSplashScreenTheme">@style/Theme.ConnectCoins</item>
     </style>
 </resources>
