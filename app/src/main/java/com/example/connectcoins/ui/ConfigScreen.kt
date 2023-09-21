@@ -56,6 +56,7 @@ fun ConfigScreen(
         ) {
             Text(
                 stringResource(id = R.string.game_settings),
+                color = Color.LightGray,
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 24.sp,
             )

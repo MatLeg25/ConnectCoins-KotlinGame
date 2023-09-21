@@ -70,7 +70,10 @@ fun SingleColumn(
             },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "${columnIdx + 1}")
+        Text(
+            text = "${columnIdx + 1}",
+            color = Color.LightGray,
+        )
         items.forEach {
             val color = if (it.playerId != null) viewModel.getPlayer(it.playerId!!).color else viewModel.backgroundColor
             CellItem(item = it, color, cellSize, gameBoardInnerColumnPadding.dp)
