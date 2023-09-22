@@ -1,8 +1,10 @@
 package com.example.connectcoins.ui
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -29,13 +31,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.connectcoins.R
+import com.example.connectcoins.data.models.Player
+import com.example.connectcoins.utils.Utils.COIN_BRUSH_COLORS
 import com.example.connectcoins.utils.Utils.ColourText
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.seconds
 
 @Preview(showBackground = true, widthDp = 500)
 @Composable
-fun TopBar(navController: NavController? = null) {
+fun TopBar(
+    gameUiState: GameUiState = GameUiState(Player("a", COIN_BRUSH_COLORS[0])),
+    navController: NavController? = null
+) {
 
     var time by remember { mutableStateOf(0) }
     LaunchedEffect(Unit) {
@@ -47,9 +54,8 @@ fun TopBar(navController: NavController? = null) {
 
     Box(
         modifier = Modifier
-            .fillMaxWidth()
             .background(
-                brush = Brush.horizontalGradient(
+                brush = Brush.verticalGradient(
                     colors = listOf(
                         Color.Black,
                         Color.Gray,
@@ -58,21 +64,26 @@ fun TopBar(navController: NavController? = null) {
                     )
                 )
             )
-            .padding(horizontal = 20.dp)
 
     ) {
         Row(
-            modifier = Modifier.padding(10.dp),
-            verticalAlignment = Alignment.CenterVertically
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            ColourText(
-                text = stringResource(id = R.string.app_name)
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            ColourText(
-                text = stringResource(id = R.string.time_X, time)
-            )
-            Spacer(modifier = Modifier.weight(1f))
+            Box(
+                modifier = Modifier.clickable {
+                    Log.w("elox"," DIsplay modwla with stats!")
+                }
+            ) {
+                ColourText(
+                    text = stringResource(id = R.string.time_X, time)
+                )
+            }
+
+            CurrentPlayerLabel(gameUiState)
+
             Card(
                 modifier = Modifier
                     .size(48.dp)
@@ -88,6 +99,7 @@ fun TopBar(navController: NavController? = null) {
                     modifier = Modifier.fillMaxSize()
                 )
             }
+
         }
     }
 }

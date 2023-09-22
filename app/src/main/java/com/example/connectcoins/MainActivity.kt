@@ -7,6 +7,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -17,6 +19,7 @@ import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
@@ -46,43 +49,53 @@ class MainActivity : ComponentActivity() {
                     mutableStateOf(Utils.getNextBackground())
                 }
                 gameViewModel = viewModel()
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .paint(
-                            painter = painterResource(id = backgroundResId),
-                            contentScale = ContentScale.Crop
-                        )
-                ) {
 
-                    //////////////////////// NAVIGATION
-                    val navController = rememberNavController()
-                    NavHost(navController = navController, startDestination = Screen.ConfigScreen.route) {
-                        composable(route = Screen.GameScreen.route) {
-                            GameScreen(gameViewModel, navController)
-                        }
-                        composable(
-                            route = Screen.ConfigScreen.route + "?name={name}",//"/{name}", //"?name={name}",
-                            arguments = listOf(
-                                navArgument("name") {
-                                    type = NavType.StringType
-                                    defaultValue = "Player :D"
-                                    nullable = true
-                                }
+                Column {
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .paint(
+                                painter = painterResource(id = backgroundResId),
+                                contentScale = ContentScale.Crop
                             )
-                        ) { entry ->
-                            ConfigScreen(
-                                name = entry.arguments?.getString("name"),
-                                changeBackground = {
-                                   backgroundResId = Utils.getNextBackground()
-                                },
-                                viewModel = gameViewModel,
-                                navController = navController
-                            )
+                    ) {
+
+                        //////////////////////// NAVIGATION
+                        val navController = rememberNavController()
+                        NavHost(navController = navController, startDestination = Screen.ConfigScreen.route) {
+                            composable(route = Screen.GameScreen.route) {
+                                GameScreen(gameViewModel, navController)
+                            }
+                            composable(
+                                route = Screen.ConfigScreen.route + "?name={name}",//"/{name}", //"?name={name}",
+                                arguments = listOf(
+                                    navArgument("name") {
+                                        type = NavType.StringType
+                                        defaultValue = "Player :D"
+                                        nullable = true
+                                    }
+                                )
+                            ) { entry ->
+                                ConfigScreen(
+                                    name = entry.arguments?.getString("name"),
+                                    changeBackground = {
+                                        backgroundResId = Utils.getNextBackground()
+                                    },
+                                    viewModel = gameViewModel,
+                                    navController = navController
+                                )
+                            }
                         }
+                        /////////////////////////////
                     }
-                    /////////////////////////////
+
+                    Utils.ColourText(
+                        text = stringResource(id = R.string.app_name)
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
                 }
+
 
             }
         }
