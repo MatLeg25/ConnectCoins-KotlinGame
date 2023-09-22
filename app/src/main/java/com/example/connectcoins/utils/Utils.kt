@@ -44,19 +44,13 @@ object Utils {
     )
 
     private val BACKGROUNDS = listOf(
-        R.drawable.wallhaven_j5px5q,
         R.drawable.wallhaven_4ojpwl,
         R.drawable.wallhaven_nzp29v,
-        R.drawable.wallhaven_qdjrl7,
         R.drawable.wallhaven_w8ejlx,
         R.drawable.wallhaven_4gjd8e,
         R.drawable.wallhaven_4xplev,
         R.drawable.wallhaven_n6q7v7,
-        R.drawable.wallhaven_4ddrwj,
-        R.drawable.wallhaven_4l5wxy,
         R.drawable.wallhaven_4xepql,
-        R.drawable.wallhaven_ym731x,
-        R.drawable.wallhaven_2kp1wg,
         R.drawable.wallhaven_42d8dy,
         R.drawable.wallhaven_45gvl5,
         R.drawable.wallhaven_49vj7x,
