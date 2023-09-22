@@ -23,8 +23,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.example.connectcoins.ui.ColourText
 import com.example.connectcoins.ui.theme.ConnectCoinsTheme
+import com.example.connectcoins.utils.Utils.ColourText
 import kotlinx.coroutines.delay
 
 @SuppressLint("CustomSplashScreen")

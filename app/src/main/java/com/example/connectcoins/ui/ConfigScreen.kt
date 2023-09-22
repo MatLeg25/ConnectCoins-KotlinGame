@@ -27,6 +27,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -68,7 +69,12 @@ fun ConfigScreen(
                         modifier = Modifier
                             .clip(CircleShape)
                             .size(50.dp)
-                            .background(player.color)
+                            //.background(player.color)
+                            .background(
+                                brush = Brush.radialGradient(
+                                    colors = player.color
+                                )
+                            )
                             .clickable {
                                 viewModel.changePlayerColor(player)
                             }

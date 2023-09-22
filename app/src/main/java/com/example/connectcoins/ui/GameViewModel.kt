@@ -20,7 +20,7 @@ class GameViewModel(): ViewModel() {
     private lateinit var validator: Validator
     var gameBoardSize = 3
         private set
-    var backgroundColor = Color.Green
+    var backgroundColor = listOf(Color.Green, Color.Green)
         private set
 
 
@@ -47,8 +47,8 @@ class GameViewModel(): ViewModel() {
     }
 
     private fun getDefaultPlayers(): List<Player> = listOf(
-        Player(name = "Player1", color = Color.Red),
-        Player(name = "Player2", color = Color.Blue)
+        Player(name = "Player1", color = Utils.COIN_BRUSH_COLORS[0]),
+        Player(name = "Player2", color = Utils.COIN_BRUSH_COLORS[1])
     )
 
 
@@ -150,14 +150,14 @@ class GameViewModel(): ViewModel() {
     }
 
 
-    private fun getNextColor(currentColor: Color): Color {
+    private fun getNextColor(currentColor: List<Color>): List<Color> {
         val usedColors = players.map { it.color }.toMutableSet()
         usedColors.add(backgroundColor)
 
-        val currentColorIndex = Utils.COIN_COLORS.indexOf(currentColor)
+        val currentColorIndex = Utils.COIN_BRUSH_COLORS.indexOf(currentColor)
         val nextColorIndex = (currentColorIndex + 1).takeIf { it < Utils.COIN_COLORS.size } ?: 0
 
-        val nextColor = Utils.COIN_COLORS[nextColorIndex]
+        val nextColor = Utils.COIN_BRUSH_COLORS[nextColorIndex]
         return if (nextColor in usedColors) getNextColor(nextColor) else nextColor
     }
 

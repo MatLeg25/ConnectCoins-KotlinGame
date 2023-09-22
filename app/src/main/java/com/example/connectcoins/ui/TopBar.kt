@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.connectcoins.R
+import com.example.connectcoins.utils.Utils.ColourText
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.seconds
 
@@ -50,8 +51,8 @@ fun TopBar(navController: NavController? = null) {
             .background(
                 brush = Brush.horizontalGradient(
                     colors = listOf(
-                        Color.Gray,
                         Color.Black,
+                        Color.Gray,
                         Color.Black,
                         Color.DarkGray
                     )

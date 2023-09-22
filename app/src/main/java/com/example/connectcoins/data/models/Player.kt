@@ -5,7 +5,7 @@ import java.util.UUID
 
 data class Player(
     val name: String,
-    val color: Color
+    val color: List<Color>
 ) {
 
     val id: String = UUID.randomUUID().toString()

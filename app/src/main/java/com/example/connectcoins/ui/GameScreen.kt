@@ -85,7 +85,7 @@ fun CurrentPlayerLabel(gameUiState: GameUiState) {
             modifier = Modifier
                 .padding(horizontal = gameBoardHorizontalPadding.dp)
                 .clip(CutCornerShape(gameBoardHorizontalPadding.dp))
-                .background(gameUiState.currentPlayer.color)
+                .background(gameUiState.currentPlayer.color[0])
         ) {
             Text(
                 modifier = Modifier.padding(horizontal = gameBoardHorizontalPadding.dp, vertical = 20.dp),

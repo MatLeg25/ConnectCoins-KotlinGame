@@ -1,6 +1,7 @@
 package com.example.connectcoins.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,7 +33,7 @@ const val gameBoardInnerColumnPadding = 1
 @Preview(showBackground = true, widthDp = 500)
 @Composable
 fun GameBoardScreen(
-    gameUiState: GameUiState = GameUiState(Player(name = "a", color = Color.Red)),
+    gameUiState: GameUiState = GameUiState(Player(name = "a", color = Utils.COIN_BRUSH_COLORS[0])),
     viewModel: GameViewModel = viewModel(),
 ) {
 
@@ -83,17 +85,28 @@ fun SingleColumn(
 }
 
 @Composable
-fun CellItem(item: Cell, color: Color, cellSize: Dp, columnPadding: Dp) {
-    val winColor = Color.Yellow
+fun CellItem(item: Cell, color: List<Color>, cellSize: Dp, columnPadding: Dp) {
 
-    val cellColor = if (item.isWin) winColor else color
+    val borderWidth = if (item.isWin) (cellSize/4) else 0.dp
 
     Box(
         modifier = Modifier
             .padding(columnPadding)
             .size(cellSize)
-            .clip(RoundedCornerShape(60.dp))
-            .background(cellColor),
+            .clip(RoundedCornerShape(cellSize))
+            .border(
+                width = borderWidth,
+                brush = Brush.radialGradient(
+                    colors = listOf(Color.Yellow, color[1])
+                ),
+                shape = RoundedCornerShape(cellSize)
+            )
+            //.background(cellColor),
+            .background(
+                brush = Brush.radialGradient(
+                    colors = color
+                )
+            ),
 
         contentAlignment = Alignment.Center,
     ) {

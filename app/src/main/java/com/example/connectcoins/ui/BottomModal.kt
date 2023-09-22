@@ -29,6 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.connectcoins.R
 import com.example.connectcoins.data.models.Player
+import com.example.connectcoins.utils.Utils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -37,7 +38,7 @@ import kotlinx.coroutines.launch
 @Preview
 fun BottomModal(
     state: SheetValue = SheetValue.Expanded,
-    gameUiState: GameUiState = GameUiState(Player(name = "x", color = Color.Transparent))
+    gameUiState: GameUiState = GameUiState(Player(name = "x", color = Utils.COIN_BRUSH_COLORS[0]))
 ) {
     val sheetState = rememberStandardBottomSheetState(
         initialValue = state,
