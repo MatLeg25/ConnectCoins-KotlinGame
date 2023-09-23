@@ -31,6 +31,15 @@ fun GameScreen(
     val context = LocalContext.current
     val gameUiState by gameViewModel.uiState.collectAsState()
     val showDialog =  remember { mutableStateOf(false) }
+    var time by remember { mutableStateOf(0) }
+    val isGameOver = !gameUiState.isGameOver
+
+    LaunchedEffect(isGameOver) {
+        while(isGameOver) {
+            delay(1.seconds)
+            time++
+        }
+    }
 
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -52,13 +61,16 @@ fun GameScreen(
 
             if (gameUiState.isGameOver) {
                 Button(
-                    onClick = { gameViewModel.resetGame() }
+                    onClick = {
+                        time = 0
+                        gameViewModel.resetGame()
+                    }
                 ) {
                     Text(text = context.getString(R.string.restart_game))
                 }
             }
 
-            GameStatsModal(gameUiState, showDialog)
+            GameStatsModal(time, gameUiState, showDialog)
 
         }
     }
@@ -67,16 +79,7 @@ fun GameScreen(
 
 
 @Composable
-fun GameStatsModal(gameUiState: GameUiState, showDialog: MutableState<Boolean>) {
-
-    var time by remember { mutableStateOf(0) }
-
-    LaunchedEffect(gameUiState.isGameOver) {
-        while(true) {
-            delay(1.seconds)
-            time++
-        }
-    }
+fun GameStatsModal(time: Int, gameUiState: GameUiState, showDialog: MutableState<Boolean>) {
 
     if(showDialog.value) {
         StatsModal(

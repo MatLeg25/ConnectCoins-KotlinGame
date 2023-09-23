@@ -3,7 +3,6 @@ package com.example.connectcoins.ui
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -45,18 +44,18 @@ fun TopBar(
                 )
             ),
         contentAlignment = Alignment.BottomCenter
-
-
     ) {
         Row(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Box(
-                modifier = Modifier.clickable { toggleModalFunction.invoke() }
+
+            Card(
+                modifier = Modifier.clickable { navController!!.navigate(Screen.ConfigScreen.route) },
+                shape = CircleShape,
             ) {
                 Image(
-                    painterResource(R.drawable.ic_stats),
+                    painterResource(R.drawable.ic_settings),
                     contentDescription = "",
                     contentScale = ContentScale.Crop,
                 )
@@ -70,13 +69,11 @@ fun TopBar(
                 CurrentPlayerLabel(gameUiState)
             }
 
-
-            Card(
-                modifier = Modifier.clickable { navController!!.navigate(Screen.ConfigScreen.route) },
-                shape = CircleShape,
+            Box(
+                modifier = Modifier.clickable { toggleModalFunction.invoke() }
             ) {
                 Image(
-                    painterResource(R.drawable.ic_settings),
+                    painterResource(R.drawable.ic_stats),
                     contentDescription = "",
                     contentScale = ContentScale.Crop,
                 )
