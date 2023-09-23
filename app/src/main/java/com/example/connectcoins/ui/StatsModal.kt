@@ -35,7 +35,7 @@ import com.example.connectcoins.utils.Utils
 fun StatsModal(
     time: Int = 0,
     value: String = "",
-    setShowDialog: (Boolean) -> Unit = {},
+    setShowStats: (Boolean) -> Unit = {},
     gameUiState: GameUiState = GameUiState(Player(name = "x", color = Utils.COIN_BRUSH_COLORS[0]))
 ) {
 
@@ -45,7 +45,7 @@ fun StatsModal(
         else stringResource(id = R.string.game_in_progress)
     val winner = gameUiState.winner
 
-    Dialog(onDismissRequest = { setShowDialog(false) }) {
+    Dialog(onDismissRequest = { setShowStats(false) }) {
         Surface(
             shape = RoundedCornerShape(16.dp),
             color = Color.DarkGray
@@ -113,7 +113,7 @@ fun StatsModal(
                         Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
                             Button(
                                 onClick = {
-                                    setShowDialog(false)
+                                    setShowStats(false)
                                 },
                                 shape = RoundedCornerShape(50.dp),
                                 modifier = Modifier
