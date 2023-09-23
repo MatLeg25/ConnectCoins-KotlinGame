@@ -20,7 +20,7 @@ class GameViewModel(): ViewModel() {
     private lateinit var validator: Validator
     var gameBoardSize = 3
         private set
-    var backgroundColor = listOf(Color.Green, Color.Green)
+    var backgroundColor = listOf(Color.Transparent, Color.DarkGray)
         private set
 
 

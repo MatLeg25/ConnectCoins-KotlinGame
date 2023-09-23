@@ -17,4 +17,5 @@
     <string name="game_no_winner">The game has no winner, draw.</string>
     <string name="game_winner_X">The winner is: %1$s</string>
     <string name="time_X">Time: %1$s</string>
+    <string name="moves_X">Moves: %1$s</string>
 </resources>
