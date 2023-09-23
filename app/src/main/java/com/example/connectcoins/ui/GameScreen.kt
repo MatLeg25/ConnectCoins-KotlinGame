@@ -30,7 +30,7 @@ fun GameScreen(
 ) {
     val context = LocalContext.current
     val gameUiState by gameViewModel.uiState.collectAsState()
-    val showDialog =  remember { mutableStateOf(false) }
+    val showStats =  remember { mutableStateOf(false) }
     var time by remember { mutableStateOf(0) }
     val isGameOver = !gameUiState.isGameOver
 
@@ -46,7 +46,7 @@ fun GameScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        TopBar(gameUiState, navController) { showDialog.value = !showDialog.value }
+        TopBar(gameUiState, navController) { showStats.value = !showStats.value }
 
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -60,6 +60,7 @@ fun GameScreen(
             Spacer(modifier = Modifier.height(20.dp))
 
             if (gameUiState.isGameOver) {
+                showStats.value = true
                 Button(
                     onClick = {
                         time = 0
@@ -70,7 +71,7 @@ fun GameScreen(
                 }
             }
 
-            GameStatsModal(time, gameUiState, showDialog)
+            GameStatsModal(time, gameUiState, showStats)
 
         }
     }
@@ -79,13 +80,13 @@ fun GameScreen(
 
 
 @Composable
-fun GameStatsModal(time: Int, gameUiState: GameUiState, showDialog: MutableState<Boolean>) {
+fun GameStatsModal(time: Int, gameUiState: GameUiState, showStats: MutableState<Boolean>) {
 
-    if(showDialog.value) {
+    if(showStats.value) {
         StatsModal(
             time = time,
             value = "",
-            setShowDialog = { showDialog.value = it },
+            setShowStats = { showStats.value = it },
             gameUiState = gameUiState
         )
     }
