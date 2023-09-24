@@ -37,7 +37,7 @@ fun GameBoardScreen(
     viewModel: GameViewModel = viewModel(),
 ) {
 
-    val cellSize = Utils.calculateCellSize(LocalConfiguration.current, viewModel.gameBoardSize)
+    val cellSize = Utils.calculateCellSize(LocalConfiguration.current, viewModel.settings.value.gameBoardSize)
 
     Row(
         modifier = Modifier.fillMaxWidth().padding(horizontal = gameBoardHorizontalPadding.dp),
@@ -77,7 +77,7 @@ fun SingleColumn(
             color = Color.LightGray,
         )
         items.forEach {
-            val color = if (it.playerId != null) viewModel.getPlayer(it.playerId!!).color else viewModel.backgroundColor
+            val color = if (it.playerId != null) viewModel.getPlayer(it.playerId!!).color else viewModel.settings.value.gameBoardBackgroundColor
             CellItem(item = it, color, cellSize, gameBoardInnerColumnPadding.dp)
         }
 

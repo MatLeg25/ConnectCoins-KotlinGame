@@ -88,7 +88,7 @@ fun ConfigScreen(
             fontSize = 24.sp,
         )
 
-        Spacer(modifier = Modifier.height(50.dp))
+        Spacer(modifier = Modifier.height(30.dp))
 
         viewModel.players.forEachIndexed { index, player ->
             Row {
@@ -230,8 +230,8 @@ fun SelectWinPoints(
 
     val listState = rememberLazyListState(initialFirstVisibleItemIndex = 0)
     val coroutineScope = rememberCoroutineScope()
+    val range = Utils.MIN_GAME_BOARD_SIZE-1 ..viewModel.settings.collectAsState().value.gameBoardSize
     val data: List<Cell> = run {
-        val range = 1..viewModel.settings.collectAsState().value.gameBoardSize
         range.mapIndexed { index, r ->
             Cell(index, r.toString(), Pair(0,index))
         }.toMutableStateList()
@@ -248,7 +248,7 @@ fun SelectWinPoints(
                     val currentIndex = listState.firstVisibleItemIndex
                     val nextIndex = if (currentIndex > 0) currentIndex-1 else currentIndex
                     listState.animateScrollToItem(index = nextIndex)
-                    viewModel.setPointsToWin(nextIndex)
+                    viewModel.setPointsToWin(nextIndex + range.first + 1)
                 }
             }
         ){
@@ -287,7 +287,7 @@ fun SelectWinPoints(
                     val currentIndex = listState.firstVisibleItemIndex
                     val nextIndex = currentIndex+1
                     listState.animateScrollToItem(index = nextIndex)
-                    viewModel.setPointsToWin(nextIndex)
+                    viewModel.setPointsToWin(nextIndex + range.first)
                 }
             }
         ){
@@ -324,7 +324,7 @@ fun SectionHeader(textResId: Int) {
 @Composable
 fun SectionDivider() {
     HorizontalDivider(
-        modifier = Modifier.padding(vertical = 20.dp),
+        modifier = Modifier.padding(vertical = 2.dp),
         thickness = 1.dp
     )
 }

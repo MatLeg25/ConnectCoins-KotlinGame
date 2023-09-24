@@ -18,17 +18,14 @@ class GameViewModel(): ViewModel() {
     lateinit var gameboard: Array<Array<Cell>>
     private var totalMoves: Int = 0
     private lateinit var validator: Validator
-    var gameBoardSize = Utils.GAME_BOARD_DEFAULT_SIZE //todo remove it
-        private set
-    var backgroundColor = listOf(Color.Transparent, Color.DarkGray)
-        private set
 
     // Game UI state
     private val _settings = MutableStateFlow(
         GameSettingsState(
             getDefaultPlayers(),
-            gameBoardSize,
-            Utils.DEFAULT_POINTS_TO_WIN
+            Utils.GAME_BOARD_DEFAULT_SIZE,
+            Utils.DEFAULT_POINTS_TO_WIN,
+            Utils.GAME_BOARD_BACKGROUND_COLOR
         )
     )
     val settings: StateFlow<GameSettingsState> = _settings.asStateFlow()
@@ -53,9 +50,9 @@ class GameViewModel(): ViewModel() {
 
     fun resetGame() {
         Log.w("elox"," RESET GAME!!!")
-        gameboard = generateGameBoard(gameBoardSize)
+        gameboard = generateGameBoard(_settings.value.gameBoardSize)
         totalMoves = gameboard.size * gameboard[0].size
-        validator = Validator(gameboard)
+        validator = Validator(gameboard, _settings.value.pointsToWin)
         _uiState.update {
             it.copy(
                 currentPlayer = _settings.value.players.first(),
@@ -69,7 +66,7 @@ class GameViewModel(): ViewModel() {
     fun getPlayer(playerId: String): Player = _settings.value.players.firstOrNull { it.id == playerId }!!
 
     fun onColumnClick(columnIdx: Int, currentPlayerId: String) {
-        //prevent ui changes if game is ended
+        //prevents ui changes if game is ended
         if (_uiState.value.isGameOver) return
 
         val cell = gameboard[columnIdx].findLast { it.playerId == null }
@@ -125,8 +122,6 @@ class GameViewModel(): ViewModel() {
     }
 
     fun setGameBoardSize(size: Int) {
-        Log.w("elox","UPDATE GAME BOARD SIZE: $size")
-        gameBoardSize = size
         _settings.update {
             it.copy(
                 gameBoardSize = size
@@ -135,6 +130,8 @@ class GameViewModel(): ViewModel() {
     }
 
     fun setPointsToWin(points: Int) {
+        Log.w("elox","UPDATE GAME BOARD SIZE: $points")
+
         _settings.update {
             it.copy(
                 pointsToWin = points
@@ -147,7 +144,6 @@ class GameViewModel(): ViewModel() {
         _settings.update { settings ->
             settings.copy(
                 players = players,
-                gameBoardSize = gameBoardSize
             )
         }
         _uiState.update {  currentState ->
@@ -165,7 +161,7 @@ class GameViewModel(): ViewModel() {
 
     private fun getNextColor(currentColor: List<Color>): List<Color> {
         val usedColors = players.map { it.color }.toMutableSet()
-        usedColors.add(backgroundColor)
+        usedColors.add(_settings.value.gameBoardBackgroundColor)
         val currentColorIndex = Utils.COIN_BRUSH_COLORS.indexOf(currentColor)
         val nextIndex = currentColorIndex + 1
         val nextColorIndex = nextIndex.takeIf { it < Utils.COIN_BRUSH_COLORS.size } ?: 0

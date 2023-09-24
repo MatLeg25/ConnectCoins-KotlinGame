@@ -26,6 +26,7 @@ object Utils {
     val MIN_GAME_BOARD_SIZE = 3
     val MAX_GAME_BOARD_SIZE = 10
     val GAME_BOARD_SIZE_RANGE = MIN_GAME_BOARD_SIZE .. MAX_GAME_BOARD_SIZE
+    val GAME_BOARD_BACKGROUND_COLOR = listOf(Color.Transparent, Color.DarkGray)
 
     val COIN_BRUSH_COLORS = listOf(
         listOf(Color(0xFF0019FF), Color(0xFF000000)),
