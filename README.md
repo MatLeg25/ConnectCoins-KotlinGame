@@ -8,10 +8,13 @@ The app allows the user to set player names, set coin colors, set points require
 Each turn each player puts his coin inside a column and it will fall until it reaches the lowest available spot. The one who can put defined (aspoints to win) amount of his coins in a row horizontally, vertically or diagonally wins.
 
 ## Screenshots:
+- Game config screen: <br />
 ![connect-coints-settings-screen](https://github.com/MatLeg25/ConnectCoing-KotlinGame/assets/70913892/f4a47b6f-9045-485c-9a51-41555323c73f)
 
+- Game stats(modal) : <br />
 ![connect_coins_game_stats_modal](https://github.com/MatLeg25/ConnectCoing-KotlinGame/assets/70913892/efc5bde6-c5e7-449d-a74f-ec07e95b9b49)
 
+- Game board screen: <br />
 ![connect-coints-game-screen](https://github.com/MatLeg25/ConnectCoing-KotlinGame/assets/70913892/235af852-835c-4378-bc14-fe61464dbadd)
 
 
