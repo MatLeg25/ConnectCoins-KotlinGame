@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
@@ -35,7 +36,6 @@ import androidx.navigation.NavController
 import com.example.connectcoins.R
 import com.example.connectcoins.ui.GameViewModel
 import com.example.connectcoins.ui.navigation.Screen
-import com.example.connectcoins.ui.screens.components.SectionDivider
 import com.example.connectcoins.ui.screens.components.SelectWinPointsSection
 import com.example.connectcoins.ui.screens.components.SetGameBoardSizeSection
 import com.example.connectcoins.utils.Utils
@@ -49,12 +49,12 @@ fun ConfigScreen(
     navController: NavController? = null,
 ) {
 
-    val state = rememberScrollState()
+    val scrollState = rememberScrollState()
 
     Column(
         modifier = Modifier
             .padding(horizontal = 20.dp)
-            .scrollable(state, Orientation.Vertical, true),
+            .verticalScroll(scrollState),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Spacer(modifier = Modifier.height(30.dp))
@@ -99,15 +99,15 @@ fun ConfigScreen(
             Spacer(modifier = Modifier.height(10.dp))
         }
 
-        SectionDivider()
+        Spacer(modifier = Modifier.height(20.dp))
 
         SelectWinPointsSection(viewModel)
 
-        SectionDivider()
+        Spacer(modifier = Modifier.height(20.dp))
 
         SetGameBoardSizeSection(viewModel)
 
-        Spacer(modifier = Modifier.height(30.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
         Button(
             onClick = changeBackground
@@ -115,7 +115,6 @@ fun ConfigScreen(
             Text(text = stringResource(id = R.string.change_background))
         }
 
-        Spacer(modifier = Modifier.height(30.dp))
         Spacer(modifier = Modifier.height(30.dp))
 
         ElevatedButton(
@@ -126,6 +125,8 @@ fun ConfigScreen(
             }) {
             Text(text = stringResource(id = R.string.start_game))
         }
+
+        Spacer(modifier = Modifier.height(20.dp))
 
     }
 

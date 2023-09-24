@@ -39,13 +39,6 @@ fun StatsModal(
     setShowStats: (Boolean) -> Unit = {},
     gameUiState: GameUiState = GameUiState(Player(name = "x", color = Utils.COIN_BRUSH_COLORS[0]))
 ) {
-
-    val isGameOver = gameUiState.isGameOver
-    val gameStateText =
-        if (isGameOver) stringResource(id = R.string.game_ended)
-        else stringResource(id = R.string.game_in_progress)
-    val winner = gameUiState.winner
-
     Dialog(onDismissRequest = { setShowStats(false) }) {
         Surface(
             shape = RoundedCornerShape(16.dp),
@@ -75,40 +68,9 @@ fun StatsModal(
 
                     Column() {
                         Spacer(modifier = Modifier.height(32.dp))
-                        Text(
-                            modifier = Modifier.padding(horizontal = 20.dp),
-                            color = Color.LightGray,
-                            text = stringResource(R.string.game_state_X, gameStateText),
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
-                        Spacer(modifier = Modifier.height(24.dp))
 
-                        if (isGameOver) {
-                            Text(
-                                modifier = Modifier.padding(horizontal = 20.dp),
-                                color = Color.LightGray,
-                                text =
-                                if (winner != null) stringResource(id = R.string.game_winner_X, winner.name)
-                                else stringResource(id = R.string.game_no_winner),
-                                style = MaterialTheme.typography.bodyMedium,
-                            )
-                            Spacer(modifier = Modifier.height(32.dp))
-                        }
+                        GameStatsList(gameUiState, time)
 
-                        Text(
-                            modifier = Modifier.padding(horizontal = 20.dp),
-                            color = Color.LightGray,
-                            text = stringResource(R.string.moves_X, gameUiState.moves),
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
-                        Spacer(modifier = Modifier.height(24.dp))
-
-                        Text(
-                            modifier = Modifier.padding(horizontal = 20.dp),
-                            color = Color.LightGray,
-                            text = stringResource(R.string.time_X, time),
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
                         Spacer(modifier = Modifier.height(24.dp))
 
                         Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
@@ -133,4 +95,52 @@ fun StatsModal(
             }
         }
     }
+}
+
+@Composable
+fun GameStatsList(
+    gameUiState: GameUiState,
+    time: Int
+) {
+
+    val isGameOver = gameUiState.isGameOver
+    val gameStateText =
+        if (isGameOver) stringResource(id = R.string.game_ended)
+        else stringResource(id = R.string.game_in_progress)
+    val winner = gameUiState.winner
+
+    Text(
+        modifier = Modifier.padding(horizontal = 20.dp),
+        color = Color.LightGray,
+        text = stringResource(R.string.game_state_X, gameStateText),
+        style = MaterialTheme.typography.bodyMedium,
+    )
+    Spacer(modifier = Modifier.height(24.dp))
+
+    if (isGameOver) {
+        Text(
+            modifier = Modifier.padding(horizontal = 20.dp),
+            color = Color.LightGray,
+            text =
+            if (winner != null) stringResource(id = R.string.game_winner_X, winner.name)
+            else stringResource(id = R.string.game_no_winner),
+            style = MaterialTheme.typography.bodyMedium,
+        )
+        Spacer(modifier = Modifier.height(32.dp))
+    }
+
+    Text(
+        modifier = Modifier.padding(horizontal = 20.dp),
+        color = Color.LightGray,
+        text = stringResource(R.string.moves_X, gameUiState.moves),
+        style = MaterialTheme.typography.bodyMedium,
+    )
+    Spacer(modifier = Modifier.height(24.dp))
+
+    Text(
+        modifier = Modifier.padding(horizontal = 20.dp),
+        color = Color.LightGray,
+        text = stringResource(R.string.time_X_seconds, time),
+        style = MaterialTheme.typography.bodyMedium,
+    )
 }
