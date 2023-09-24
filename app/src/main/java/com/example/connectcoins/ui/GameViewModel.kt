@@ -18,7 +18,6 @@ import kotlinx.coroutines.flow.update
 class GameViewModel(): ViewModel() {
 
     lateinit var gameboard: Array<Array<Cell>>
-    private var totalMoves: Int = 0
     private lateinit var validator: Validator
 
     // Game UI state
@@ -53,12 +52,12 @@ class GameViewModel(): ViewModel() {
     fun resetGame() {
         Log.w("GameViewModel"," RESET GAME!!!")
         gameboard = generateGameBoard(_settings.value.gameBoardSize)
-        totalMoves = gameboard.size * gameboard[0].size
         validator = Validator(gameboard, _settings.value.pointsToWin)
         _uiState.update {
             it.copy(
                 currentPlayer = _settings.value.players.first(),
                 moves = 0,
+                totalMoves = gameboard.size * gameboard[0].size,
                 isGameOver = false,
                 winner = null,
             )
@@ -97,7 +96,7 @@ class GameViewModel(): ViewModel() {
                 isGameOver = true,
                 winner = getPlayer(currentPlayerId)
             )
-        } else if (_uiState.value.moves == totalMoves) _uiState.update { currentState ->
+        } else if (_uiState.value.moves == _uiState.value.totalMoves) _uiState.update { currentState ->
             currentState.copy(
                 isGameOver = true,
                 winner = null

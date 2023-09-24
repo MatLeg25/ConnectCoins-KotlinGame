@@ -64,10 +64,9 @@ fun StatsModal(
                         )
                     }
                     HorizontalDivider(thickness = 1.dp, color = Color.LightGray)
-                    Spacer(modifier = Modifier.height(20.dp))
+                    Spacer(modifier = Modifier.height(30.dp))
 
                     Column() {
-                        Spacer(modifier = Modifier.height(32.dp))
 
                         GameStatsList(gameUiState, time)
 
@@ -109,38 +108,39 @@ fun GameStatsList(
         else stringResource(id = R.string.game_in_progress)
     val winner = gameUiState.winner
 
-    Text(
-        modifier = Modifier.padding(horizontal = 20.dp),
-        color = Color.LightGray,
-        text = stringResource(R.string.game_state_X, gameStateText),
-        style = MaterialTheme.typography.bodyMedium,
-    )
-    Spacer(modifier = Modifier.height(24.dp))
-
-    if (isGameOver) {
+    Column(
+        modifier = Modifier.padding(horizontal = 20.dp)
+    ) {
         Text(
-            modifier = Modifier.padding(horizontal = 20.dp),
+            text = stringResource(R.string.game_state_X, gameStateText),
+            color = Color.LightGray,
+            style = MaterialTheme.typography.bodyMedium,
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+
+//    if (isGameOver) {
+        Text(
             color = Color.LightGray,
             text =
             if (winner != null) stringResource(id = R.string.game_winner_X, winner.name)
             else stringResource(id = R.string.game_no_winner),
             style = MaterialTheme.typography.bodyMedium,
         )
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(20.dp))
+//    }
+
+        Text(
+            color = Color.LightGray,
+            text = stringResource(R.string.moves_X_by_Y, gameUiState.moves, gameUiState.totalMoves),
+            style = MaterialTheme.typography.bodyMedium,
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+
+        Text(
+            color = Color.LightGray,
+            text = stringResource(R.string.time_X_seconds, time),
+            style = MaterialTheme.typography.bodyMedium,
+        )
     }
 
-    Text(
-        modifier = Modifier.padding(horizontal = 20.dp),
-        color = Color.LightGray,
-        text = stringResource(R.string.moves_X, gameUiState.moves),
-        style = MaterialTheme.typography.bodyMedium,
-    )
-    Spacer(modifier = Modifier.height(24.dp))
-
-    Text(
-        modifier = Modifier.padding(horizontal = 20.dp),
-        color = Color.LightGray,
-        text = stringResource(R.string.time_X_seconds, time),
-        style = MaterialTheme.typography.bodyMedium,
-    )
 }

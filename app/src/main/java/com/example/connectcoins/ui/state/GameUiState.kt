@@ -8,6 +8,7 @@ import com.example.connectcoins.data.models.Player
 data class GameUiState(
     val currentPlayer: Player,
     val moves: Int = 0,
+    val totalMoves: Int = 0,
     val isGameOver: Boolean = false,
     val winner: Player? = null
 )
