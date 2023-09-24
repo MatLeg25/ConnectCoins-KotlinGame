@@ -126,9 +126,7 @@ class GameViewModel(): ViewModel() {
     }
 
     fun setGameBoardSize(size: Int) {
-        Log.e("elox","Set gameboard size == $gameBoardSize : $size")
         gameBoardSize = size
-        Log.e("elox","Set gameboard size == $gameBoardSize : $size")
     }
 
     fun setConfig() {
@@ -153,10 +151,9 @@ class GameViewModel(): ViewModel() {
     private fun getNextColor(currentColor: List<Color>): List<Color> {
         val usedColors = players.map { it.color }.toMutableSet()
         usedColors.add(backgroundColor)
-
         val currentColorIndex = Utils.COIN_BRUSH_COLORS.indexOf(currentColor)
-        val nextColorIndex = (currentColorIndex + 1).takeIf { it < Utils.COIN_COLORS.size } ?: 0
-
+        val nextIndex = currentColorIndex + 1
+        val nextColorIndex = nextIndex.takeIf { it < Utils.COIN_BRUSH_COLORS.size } ?: 0
         val nextColor = Utils.COIN_BRUSH_COLORS[nextColorIndex]
         return if (nextColor in usedColors) getNextColor(nextColor) else nextColor
     }

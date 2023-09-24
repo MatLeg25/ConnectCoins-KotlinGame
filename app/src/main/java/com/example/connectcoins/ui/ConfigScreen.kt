@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
@@ -17,6 +18,7 @@ import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -37,8 +39,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.connectcoins.R
+import com.example.connectcoins.utils.Utils
 
-@Preview(showBackground = true, widthDp = 500)
+@Preview(showBackground = true, widthDp = 300)
 @Composable
 fun ConfigScreen(
     name: String? = "name",
@@ -48,7 +51,7 @@ fun ConfigScreen(
 ) {
 
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().padding(horizontal = 20.dp),
         contentAlignment = Alignment.Center,
     ) {
 
@@ -57,19 +60,20 @@ fun ConfigScreen(
         ) {
             Text(
                 stringResource(id = R.string.game_settings),
-                color = Color.LightGray,
+                color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 24.sp,
             )
 
             Spacer(modifier = Modifier.height(50.dp))
+
             viewModel.players.forEachIndexed { index, player ->
                 Row {
+
                     Box(
                         modifier = Modifier
                             .clip(CircleShape)
                             .size(50.dp)
-                            //.background(player.color)
                             .background(
                                 brush = Brush.radialGradient(
                                     colors = player.color
@@ -78,17 +82,21 @@ fun ConfigScreen(
                             .clickable {
                                 viewModel.changePlayerColor(player)
                             }
-                    ) {
-                        Text(stringResource(id = R.string.player_X, index + 1))
-                    }
-                    TextField(value = player.name, onValueChange = {
-                        viewModel.changePlayerName(player, it)
-                    }, label = {
-                        Text(stringResource(id = R.string.player_X, index + 1))
-                    })
+                    )
+
+                    TextField(
+                        value = player.name,
+                        onValueChange = {
+                            if (it.length <= Utils.MAX_PLAYER_NAME_LENGTH) viewModel.changePlayerName(player, it)
+                        },
+                        label = {
+                            Text(stringResource(id = R.string.player_X, index + 1))
+                        },
+                        singleLine = true
+                    )
 
                 }
-                Spacer(modifier = Modifier.height(30.dp))
+                Spacer(modifier = Modifier.height(10.dp))
             }
 
             Spacer(modifier = Modifier.height(30.dp))
@@ -132,9 +140,10 @@ fun DropdownMenu(
         mutableStateOf(false)
     }
 
-    val s = viewModel.gameboard.size
     var selectedOption by remember {
-        mutableStateOf(optionTextFormatter(s, s))
+        mutableStateOf(
+            optionTextFormatter(viewModel.gameboard.size, viewModel.gameboard.size)
+        )
     }
 
     ExposedDropdownMenuBox(

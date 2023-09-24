@@ -62,7 +62,7 @@ fun StatsModal(
                         Text(
                             text = stringResource(id = R.string.game_stats),
                             style = TextStyle(
-                                color = com.example.connectcoins.ui.theme.Pink40, //todo use colors from theme
+                                color = MaterialTheme.colorScheme.primary,
                                 fontSize = 24.sp,
                                 fontFamily = FontFamily.Default,
                                 fontWeight = FontWeight.Bold

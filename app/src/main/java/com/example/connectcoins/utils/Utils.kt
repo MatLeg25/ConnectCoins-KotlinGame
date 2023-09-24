@@ -20,27 +20,30 @@ import com.example.connectcoins.ui.gameBoardInnerColumnPadding
 
 
 object Utils {
-
-    val COIN_COLORS = listOf(
-        Color.Black, Color.DarkGray, Color.Gray, Color.LightGray, Color.White, Color.Red, Color.Green,
-        Color.Blue, Color.Yellow, Color.Cyan, Color.Magenta,
-    )
+    val MAX_PLAYER_NAME_LENGTH = 30
 
     val COIN_BRUSH_COLORS = listOf(
-        listOf(Color(0xFFFF8403), Color(0xFFFF5722)),
-        listOf(Color(0xFF03A9F4), Color(0xFF0629EC)),
-        listOf(Color(0xFF9C27B0), Color(0xFFFF0051)),
+        listOf(Color(0xFF0019FF), Color(0xFF000000)),
+        listOf(Color(0xFFDA00FF), Color(0xFF000000)),
+        listOf(Color(0xFFFD0000), Color(0xFF000000)),
+        listOf(Color(0xFFFF9800), Color(0xFF000000)),
+        listOf(Color(0xFF00FF0A), Color(0xFF000000)),
 
-        listOf(Color.Blue, Color.Black),
-        listOf(Color.Gray, Color.DarkGray),
-        listOf(Color.White, Color.LightGray),
-        listOf(Color.Red, Color.Magenta),
+        listOf(Color(0xFF0019FF), Color(0xFF777777)),
+        listOf(Color(0xFFDA00FF), Color(0xFF777777)),
+        listOf(Color(0xFFFD0000), Color(0xFF777777)),
+        listOf(Color(0xFFFF9800), Color(0xFF777777)),
+        listOf(Color(0xFF00FF0A), Color(0xFF777777)),
 
-        listOf(Color.Yellow, Color.Green),
-        listOf(Color.Black, Color.Blue),
-        listOf(Color.DarkGray, Color.Gray),
-        listOf(Color.LightGray, Color.Black),
-        listOf(Color.Magenta, Color.Red),
+        listOf(Color(0xFF0019FF), Color(0xFFFD0000)),
+        listOf(Color(0xFFDA00FF), Color(0xFFFD0000)),
+        listOf(Color(0xFFFF9800), Color(0xFFFD0000)),
+        listOf(Color(0xFF00FF0A), Color(0xFFFD0000)),
+
+        listOf(Color(0xFF0019FF), Color(0xFFDA00FF)),
+        listOf(Color(0xFFFD0000), Color(0xFFDA00FF)),
+        listOf(Color(0xFFFF9800), Color(0xFFDA00FF)),
+        listOf(Color(0xFF00FF0A), Color(0xFFDA00FF)),
     )
 
     private val BACKGROUNDS = listOf(
