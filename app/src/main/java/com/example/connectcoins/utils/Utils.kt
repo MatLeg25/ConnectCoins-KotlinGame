@@ -20,6 +20,7 @@ import com.example.connectcoins.ui.gameBoardInnerColumnPadding
 
 
 object Utils {
+
     val MAX_PLAYER_NAME_LENGTH = 30
     val GAME_BOARD_DEFAULT_SIZE = 4
     val DEFAULT_POINTS_TO_WIN = 3
@@ -76,6 +77,7 @@ object Utils {
 
     private var backgroundIndex: Int = BACKGROUNDS.indices.random()
 
+
     private fun getMinScreenDimension(configuration: Configuration): Dp {
         val screenHeight = configuration.screenHeightDp.dp
         val screenWidth = configuration.screenWidthDp.dp
@@ -95,28 +97,4 @@ object Utils {
         return BACKGROUNDS[backgroundIndex]
     }
 
-    @Composable
-    fun ColourText(
-        text: String,
-        fontSize: TextUnit = 16.sp,
-    ) {
-        val gradientColors = listOf(Color.Red, Color.Magenta, Color.Blue, Color.Green, Color.Yellow)
-
-        Text(
-            text = buildAnnotatedString {
-                withStyle(
-                    SpanStyle(
-                        brush = Brush.linearGradient(
-                            colors = gradientColors
-                        ),
-                        fontWeight = FontWeight.ExtraBold
-                    )
-                ) {
-                    append(text)
-                }
-            },
-            fontSize = fontSize,
-        )
-
-    }
 }

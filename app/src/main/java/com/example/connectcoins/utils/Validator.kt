@@ -7,7 +7,6 @@ class Validator(
     private val gameBoard: Array<Array<Cell>>,
     private val pointsToWin: Int
 ) {
-
     private val rowsRange = gameBoard.indices
     private val columnsRange = gameBoard[0].indices
     private val winCombination: MutableList<Pair<Int, Int>> = mutableListOf()
@@ -19,22 +18,22 @@ class Validator(
         playerId = currentPlayerId
 
         return if (checkHorizontal()) {
-            Log.w("elox",">>>WIN by checkHorizontal")
+            Log.w("Validator",">>>WIN by checkHorizontal")
             setWinCombination()
             winCombination
         }
         else if (checkVertical()) {
-            Log.w("elox",">>>WIN by checkVertical")
+            Log.w("Validator",">>>WIN by checkVertical")
             setWinCombination()
             winCombination
         }
         else if (checkDiagonalLtToRb()) {
-            Log.w("elox",">>>WIN by checkDiagonalRightBottom")
+            Log.w("Validator",">>>WIN by checkDiagonalRightBottom")
             setWinCombination()
             winCombination
         }
         else if (checkDiagonalLbToRt()){
-            Log.w("elox",">>>WIN by checkDiagonalLeftTop")
+            Log.w("Validator",">>>WIN by checkDiagonalLeftTop")
             setWinCombination()
             winCombination
         }  else null
@@ -128,13 +127,10 @@ class Validator(
     }
 
     private fun setWinCombination() {
-        Log.e("elox",">>>winCombination $winCombination")
         winCombination.forEach { cords ->
             gameBoard[cords.first][cords.second].isWin = true
         }
     }
-
-
 
 
 }

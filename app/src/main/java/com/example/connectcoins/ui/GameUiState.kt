@@ -1,6 +1,5 @@
 package com.example.connectcoins.ui
 
-import android.util.Log
 import androidx.compose.ui.graphics.Color
 import com.example.connectcoins.data.models.Player
 
@@ -12,15 +11,7 @@ data class GameUiState(
     val moves: Int = 0,
     val isGameOver: Boolean = false,
     val winner: Player? = null
-) {
-    fun printInfo() {
-        Log.w("elox","------------------------------------------------------------------------")
-        Log.w("elox",">>>>>>>>>>>>>>>>>>>>>>>>> ${currentPlayer.name} : ${currentPlayer.id}")
-        Log.w("elox",">>>>>>>>>>>>>>>>>>>>>>>>> $moves")
-        Log.w("elox",">>>>>>>>>>>>>>>>>>>>>>>>> $isGameOver : ${winner?.name}")
-        Log.w("elox","------------------------------------------------------------------------")
-    }
-}
+)
 
 data class GameSettingsState(
     val players: List<Player>,

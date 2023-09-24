@@ -86,7 +86,6 @@ class GameViewModel(): ViewModel() {
                 currentPlayer = _settings.value.players[currentPlayerIdx]
             )
         }
-       // uiState.value.printInfo()
     }
 
     private fun isEndGame(currentPlayerId: String) {
@@ -130,8 +129,6 @@ class GameViewModel(): ViewModel() {
     }
 
     fun setPointsToWin(points: Int) {
-        Log.w("elox","UPDATE GAME BOARD SIZE: $points")
-
         _settings.update {
             it.copy(
                 pointsToWin = points
@@ -156,9 +153,6 @@ class GameViewModel(): ViewModel() {
         }
     }
 
-    fun getPointsToWinRange(): IntRange = Utils.MIN_GAME_BOARD_SIZE-1 .. settings.value.gameBoardSize
-
-
     private fun getNextColor(currentColor: List<Color>): List<Color> {
         val usedColors = players.map { it.color }.toMutableSet()
         usedColors.add(_settings.value.gameBoardBackgroundColor)
@@ -168,6 +162,5 @@ class GameViewModel(): ViewModel() {
         val nextColor = Utils.COIN_BRUSH_COLORS[nextColorIndex]
         return if (nextColor in usedColors) getNextColor(nextColor) else nextColor
     }
-
 
 }
