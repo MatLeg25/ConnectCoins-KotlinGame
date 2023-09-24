@@ -48,7 +48,7 @@ fun SelectWinPointsSection(viewModel: GameViewModel = androidx.lifecycle.viewmod
             modifier = Modifier
                 .padding(horizontal = 10.dp)
                 .background(
-                    color = Color.DarkGray,
+                    color = Color.Gray,
                 )) {
             HorizontalDivider(thickness = 1.dp)
             Text(
