@@ -118,7 +118,7 @@ fun GameStatsList(
         )
         Spacer(modifier = Modifier.height(20.dp))
 
-//    if (isGameOver) {
+    if (isGameOver) {
         Text(
             color = Color.LightGray,
             text =
@@ -127,7 +127,7 @@ fun GameStatsList(
             style = MaterialTheme.typography.bodyMedium,
         )
         Spacer(modifier = Modifier.height(20.dp))
-//    }
+    }
 
         Text(
             color = Color.LightGray,
