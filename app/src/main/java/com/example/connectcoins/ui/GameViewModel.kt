@@ -147,6 +147,8 @@ class GameViewModel(): ViewModel() {
         }
     }
 
+    fun getPointsToWinRange(): IntRange = Utils.MIN_GAME_BOARD_SIZE .. settings.value.gameBoardSize
+
 
     private fun getNextColor(currentColor: List<Color>): List<Color> {
         val usedColors = players.map { it.color }.toMutableSet()

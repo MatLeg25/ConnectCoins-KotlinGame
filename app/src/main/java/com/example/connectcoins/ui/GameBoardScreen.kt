@@ -85,7 +85,13 @@ fun SingleColumn(
 }
 
 @Composable
-fun CellItem(item: Cell, color: List<Color>, cellSize: Dp, columnPadding: Dp) {
+fun CellItem(
+    item: Cell,
+    color: List<Color>,
+    cellSize: Dp,
+    columnPadding: Dp,
+    displayedText: String = item.cords.toString()
+) {
 
     val borderWidth = if (item.isWin) (cellSize/4) else 0.dp
 
@@ -110,6 +116,6 @@ fun CellItem(item: Cell, color: List<Color>, cellSize: Dp, columnPadding: Dp) {
 
         contentAlignment = Alignment.Center,
     ) {
-        Text(text = item.cords.toString())
+        Text(text = displayedText)
     }
 }

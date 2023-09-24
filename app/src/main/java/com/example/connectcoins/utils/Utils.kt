@@ -21,6 +21,9 @@ import com.example.connectcoins.ui.gameBoardInnerColumnPadding
 
 object Utils {
     val MAX_PLAYER_NAME_LENGTH = 30
+    val MIN_GAME_BOARD_SIZE = 3
+    val MAX_GAME_BOARD_SIZE = 10
+    val GAME_BOARD_SIZE_RANGE = MIN_GAME_BOARD_SIZE .. MAX_GAME_BOARD_SIZE
 
     val COIN_BRUSH_COLORS = listOf(
         listOf(Color(0xFF0019FF), Color(0xFF000000)),
