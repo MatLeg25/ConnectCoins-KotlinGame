@@ -97,9 +97,9 @@ fun ConfigScreen(
                     },
                     singleLine = true,
                     colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color.Gray,
-                        unfocusedContainerColor = Color.Gray,
-                        disabledContainerColor = Color.Gray,
+                        focusedContainerColor = Color.DarkGray,
+                        unfocusedContainerColor = Color.DarkGray,
+                        disabledContainerColor = Color.DarkGray,
                     ),
                 )
 
