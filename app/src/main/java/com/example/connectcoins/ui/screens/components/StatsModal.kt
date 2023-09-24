@@ -1,4 +1,4 @@
-package com.example.connectcoins.ui
+package com.example.connectcoins.ui.screens.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.connectcoins.R
 import com.example.connectcoins.data.models.Player
+import com.example.connectcoins.ui.state.GameUiState
 import com.example.connectcoins.utils.Utils
 
 @Preview

@@ -1,4 +1,4 @@
-package com.example.connectcoins.ui
+package com.example.connectcoins.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -25,6 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.connectcoins.data.models.Cell
 import com.example.connectcoins.data.models.Player
+import com.example.connectcoins.ui.state.GameUiState
+import com.example.connectcoins.ui.GameViewModel
 import com.example.connectcoins.utils.Utils
 
 const val gameBoardHorizontalPadding = 10
@@ -107,7 +109,6 @@ fun CellItem(
                 ),
                 shape = RoundedCornerShape(cellSize)
             )
-            //.background(cellColor),
             .background(
                 brush = Brush.radialGradient(
                     colors = color

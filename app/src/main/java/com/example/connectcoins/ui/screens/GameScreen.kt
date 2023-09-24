@@ -1,4 +1,4 @@
-package com.example.connectcoins.ui
+package com.example.connectcoins.ui.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -20,6 +20,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.connectcoins.R
+import com.example.connectcoins.ui.state.GameUiState
+import com.example.connectcoins.ui.GameViewModel
+import com.example.connectcoins.ui.screens.components.StatsModal
+import com.example.connectcoins.ui.screens.components.TopBar
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.seconds
 

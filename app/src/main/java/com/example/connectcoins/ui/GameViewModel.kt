@@ -6,6 +6,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import com.example.connectcoins.data.models.Cell
 import com.example.connectcoins.data.models.Player
+import com.example.connectcoins.ui.state.GameSettingsState
+import com.example.connectcoins.ui.state.GameUiState
 import com.example.connectcoins.utils.Utils
 import com.example.connectcoins.utils.Validator
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -49,7 +51,7 @@ class GameViewModel(): ViewModel() {
 
 
     fun resetGame() {
-        Log.w("elox"," RESET GAME!!!")
+        Log.w("GameViewModel"," RESET GAME!!!")
         gameboard = generateGameBoard(_settings.value.gameBoardSize)
         totalMoves = gameboard.size * gameboard[0].size
         validator = Validator(gameboard, _settings.value.pointsToWin)

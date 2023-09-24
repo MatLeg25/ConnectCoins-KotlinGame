@@ -1,4 +1,4 @@
-package com.example.connectcoins.ui
+package com.example.connectcoins.ui.navigation
 
 sealed class Screen(val route: String) {
     object GameScreen: Screen("game_screen")

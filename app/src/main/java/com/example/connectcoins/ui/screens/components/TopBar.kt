@@ -1,4 +1,4 @@
-package com.example.connectcoins.ui
+package com.example.connectcoins.ui.screens.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,6 +21,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.connectcoins.R
 import com.example.connectcoins.data.models.Player
+import com.example.connectcoins.ui.state.GameUiState
+import com.example.connectcoins.ui.navigation.Screen
 import com.example.connectcoins.utils.Utils.COIN_BRUSH_COLORS
 
 @Preview(showBackground = true, widthDp = 500)
