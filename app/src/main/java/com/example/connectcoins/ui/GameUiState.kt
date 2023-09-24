@@ -24,4 +24,5 @@ data class GameUiState(
 data class GameSettingsState(
     val players: List<Player>,
     val gameBoardSize: Int,
+    val pointsToWin: Int,
 )

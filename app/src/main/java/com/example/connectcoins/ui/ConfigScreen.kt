@@ -1,5 +1,6 @@
 package com.example.connectcoins.ui
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -38,11 +39,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -227,10 +230,11 @@ fun SelectWinPoints(
 
     val listState = rememberLazyListState(initialFirstVisibleItemIndex = 0)
     val coroutineScope = rememberCoroutineScope()
-    val data: List<Cell> = remember {
-        viewModel.getPointsToWinRange().mapIndexed { index, r ->
+    val data: List<Cell> = run {
+        val range = 1..viewModel.settings.collectAsState().value.gameBoardSize
+        range.mapIndexed { index, r ->
             Cell(index, r.toString(), Pair(0,index))
-        }
+        }.toMutableStateList()
     }
 
     Row(
@@ -244,6 +248,7 @@ fun SelectWinPoints(
                     val currentIndex = listState.firstVisibleItemIndex
                     val nextIndex = if (currentIndex > 0) currentIndex-1 else currentIndex
                     listState.animateScrollToItem(index = nextIndex)
+                    viewModel.setPointsToWin(nextIndex)
                 }
             }
         ){
@@ -252,7 +257,6 @@ fun SelectWinPoints(
                 contentDescription = "",
                 tint = MaterialTheme.colorScheme.surfaceBright,
                 modifier = Modifier
-
             )
         }
 
@@ -281,7 +285,9 @@ fun SelectWinPoints(
             onClick = {
                 coroutineScope.launch {
                     val currentIndex = listState.firstVisibleItemIndex
-                    listState.animateScrollToItem(index = currentIndex+1)
+                    val nextIndex = currentIndex+1
+                    listState.animateScrollToItem(index = nextIndex)
+                    viewModel.setPointsToWin(nextIndex)
                 }
             }
         ){

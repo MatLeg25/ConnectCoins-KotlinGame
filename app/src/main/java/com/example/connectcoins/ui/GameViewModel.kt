@@ -18,18 +18,17 @@ class GameViewModel(): ViewModel() {
     lateinit var gameboard: Array<Array<Cell>>
     private var totalMoves: Int = 0
     private lateinit var validator: Validator
-    var gameBoardSize = 3
+    var gameBoardSize = Utils.GAME_BOARD_DEFAULT_SIZE //todo remove it
         private set
     var backgroundColor = listOf(Color.Transparent, Color.DarkGray)
         private set
-
-
 
     // Game UI state
     private val _settings = MutableStateFlow(
         GameSettingsState(
             getDefaultPlayers(),
-            gameBoardSize
+            gameBoardSize,
+            Utils.DEFAULT_POINTS_TO_WIN
         )
     )
     val settings: StateFlow<GameSettingsState> = _settings.asStateFlow()
@@ -126,7 +125,21 @@ class GameViewModel(): ViewModel() {
     }
 
     fun setGameBoardSize(size: Int) {
+        Log.w("elox","UPDATE GAME BOARD SIZE: $size")
         gameBoardSize = size
+        _settings.update {
+            it.copy(
+                gameBoardSize = size
+            )
+        }
+    }
+
+    fun setPointsToWin(points: Int) {
+        _settings.update {
+            it.copy(
+                pointsToWin = points
+            )
+        }
     }
 
     fun setConfig() {
@@ -147,7 +160,7 @@ class GameViewModel(): ViewModel() {
         }
     }
 
-    fun getPointsToWinRange(): IntRange = Utils.MIN_GAME_BOARD_SIZE .. settings.value.gameBoardSize
+    fun getPointsToWinRange(): IntRange = Utils.MIN_GAME_BOARD_SIZE-1 .. settings.value.gameBoardSize
 
 
     private fun getNextColor(currentColor: List<Color>): List<Color> {

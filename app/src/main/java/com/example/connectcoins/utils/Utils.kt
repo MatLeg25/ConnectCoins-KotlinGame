@@ -21,6 +21,8 @@ import com.example.connectcoins.ui.gameBoardInnerColumnPadding
 
 object Utils {
     val MAX_PLAYER_NAME_LENGTH = 30
+    val GAME_BOARD_DEFAULT_SIZE = 4
+    val DEFAULT_POINTS_TO_WIN = 3
     val MIN_GAME_BOARD_SIZE = 3
     val MAX_GAME_BOARD_SIZE = 10
     val GAME_BOARD_SIZE_RANGE = MIN_GAME_BOARD_SIZE .. MAX_GAME_BOARD_SIZE
